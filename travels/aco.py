@@ -1,8 +1,6 @@
 # import 항목
-import os
 import math
 import random
-from matplotlib import pyplot as plt
 from travels import models as travels_models
 
 # aco 코드
@@ -173,31 +171,6 @@ class SolveTSPUsingACO:
             )
         )
 
-    def plot(
-        self,
-        line_width=1,
-        point_radius=math.sqrt(2.0),
-        annotation_size=8,
-        dpi=120,
-        save=True,
-        name=None,
-    ):
-        x = [self.nodes[i][0] for i in self.global_best_tour]
-        x.append(x[0])
-        y = [self.nodes[i][1] for i in self.global_best_tour]
-        y.append(y[0])
-        plt.plot(x, y, linewidth=line_width)
-        plt.scatter(x, y, s=math.pi * (point_radius**2.0))
-        plt.title(self.mode)
-        for i in self.global_best_tour:
-            plt.annotate(self.labels[i], self.nodes[i], size=annotation_size)
-        if save:
-            if name is None:
-                name = "{0}.png".format(self.mode)
-            plt.savefig(name, dpi=dpi)
-        plt.show()
-        plt.gcf().clear()
-
 
 if __name__ == "__main__":
     _colony_size = 5
@@ -209,4 +182,3 @@ if __name__ == "__main__":
         mode="MaxMin", colony_size=_colony_size, steps=_steps, nodes=_nodes
     )
     max_min.run()
-    max_min.plot()

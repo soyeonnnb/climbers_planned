@@ -26,7 +26,6 @@ def createtravel(request):
                 travel=new_travel,
                 name=site,
                 day=count_date,
-                order=1,
                 latitude=0,
                 longitude=2,
             )

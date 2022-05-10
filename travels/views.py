@@ -1,6 +1,7 @@
+import random
 from django.shortcuts import render, redirect
 
-# from . import aco
+from . import aco
 from . import forms
 from . import models
 
@@ -15,20 +16,26 @@ def createtravel(request):
             end_date = form.cleaned_data.get("end_date")
             lodging = form.cleaned_data.get("lodging")
             site = form.cleaned_data.get("site")
-            count_date = (end_date - start_date).days
+            count_date = (end_date - start_date).days + 1
             new_travel = models.Travel.objects.create(
                 name=city, start_date=start_date, end_date=end_date, user=user
             )
             new_lodging = models.Lodging.objects.create(
-                travel=new_travel, name=lodging, latitude=0, longitude=2
-            )
-            new_place = models.Place.objects.create(
                 travel=new_travel,
-                name=site,
-                day=count_date,
-                latitude=0,
-                longitude=2,
+                name=lodging,
+                latitude=random.uniform(0, 5),
+                longitude=random.uniform(0, 5),
             )
+            for i in range(10):
+                new_place = models.Place.objects.create(
+                    travel=new_travel,
+                    name=site + str(i),
+                    day=random.randint(1, count_date),
+                    latitude=random.uniform(0, 5),
+                    longitude=random.uniform(0, 5),
+                    order=0,
+                )
+            aco.aco_run(new_travel, count_date)
             return redirect("travels:checkpath", pk=new_travel.pk)
     else:
         form = forms.CreateTravelForm()

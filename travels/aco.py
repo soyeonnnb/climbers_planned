@@ -218,31 +218,6 @@ class SolveTSPUsingACO:
             place.save()
             num += 1
 
-    # def plot(
-    #     self,
-    #     line_width=1,
-    #     point_radius=math.sqrt(2.0),
-    #     annotation_size=8,
-    #     dpi=120,
-    #     save=True,
-    #     name=None,
-    # ):  # 사진 그래프로 보여줌
-    #     x = [self.nodes[i][0] for i in self.global_best_tour]
-    #     x.append(x[0])
-    #     y = [self.nodes[i][1] for i in self.global_best_tour]
-    #     y.append(y[0])
-    #     plt.plot(x, y, linewidth=line_width)
-    #     plt.scatter(x, y, s=math.pi * (point_radius**2.0))
-    #     plt.title(self.mode)
-    #     for i in self.global_best_tour:
-    #         plt.annotate(self.labels[i], self.nodes[i], size=annotation_size)
-    #     if save:
-    #         if name is None:
-    #             name = "{0}.png".format(self.mode)
-    #         plt.savefig(name, dpi=dpi)
-    #     plt.show()
-    #     plt.gcf().clear()
-
 
 def aco_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
@@ -257,16 +232,3 @@ def aco_run(travel, count_date):
         max_min.run()
         # max_min.plot()
         max_min.save_route()
-
-
-# if __name__ == "__main__":
-#     _colony_size = 5
-#     _steps = 50
-#     _nodes = [
-#         (random.uniform(-400, 400), random.uniform(-400, 400)) for _ in range(0, 15)
-#     ]  # 여기에 place 값 가져오면 될 듯
-#     max_min = SolveTSPUsingACO(
-#         mode="MaxMin", colony_size=_colony_size, steps=_steps, nodes=_nodes
-#     )
-#     max_min.run()
-#     max_min.plot()

@@ -1,7 +1,9 @@
+
 import random
 from django.shortcuts import render, redirect
 
 from . import aco
+
 from . import forms
 from . import models
 
@@ -17,6 +19,7 @@ def createtravel(request):
             lodging = form.cleaned_data.get("lodging")
             site = form.cleaned_data.get("site")
             count_date = (end_date - start_date).days + 1
+
             new_travel = models.Travel.objects.create(
                 name=city, start_date=start_date, end_date=end_date, user=user
             )

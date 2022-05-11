@@ -7,9 +7,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-
 <body>
-    <a href="{% url 'travels:createtravel' %}">여행지추가</a>
-</body>
+<p>안녕</p>
+{% if user.is_authenticated %}
+  <h4>{{request.user}}님 안녕하세요!</h4>
+  <a href="{% url 'users:logout' %}">로그아웃</a>
+{% else %}
+  <a href="{% url 'users:signup' %}">회원가입</a>
+  <a href="{% url 'users:login' %}">로그인</a>
+ 
+{% endif %}
 
-</html>
+<a href="{% url 'travels:createtravel' %}">여행지 추가</a>
+{% for eachtravel in alltravel %}
+
+    {{eachtravel.name}}
+    {{eachtravel.start_date}}
+    {{eachtravel.end_date}}
+    {{eachtravel.id}}
+{% endfor %}
+  </body>

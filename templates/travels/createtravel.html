@@ -1,24 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>주소로 장소 표시하기</title>
-    <h1>여행지 추가</h1>
-</head>
-<body>
-
+{% extends 'base.html' %}
+{% block page_title %}여행지 생성{% endblock page_title %}
+{% block content %}
+<h1>여행지 추가</h1>
 <div id="map" style="width:100%;height:350px;"></div>
+<form action="" method="post">
+    {%csrf_token%}
+    {{form}}
+    <button>취소</button>
+    <button type='submit'>경로 추천</button>
 
-<form>
-    <input type = 'button' value = '여행지 선택 완료' onclick = 'finishInputplaces()'>
-    <form action="" method="post">
-        {%csrf_token%}
-        {{form}}
-        <button>취소</button>
-        <button type='submit'>경로 추천</button>
-    </form>
 </form>
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=899bda16db224b9417dff6448a51609c&libraries=services"></script>
 <script language= javascript> function finishInputplaces() {
     var placesList = ""
@@ -127,5 +118,16 @@ function antColony(places){
     // alert(places[1])
 }
 </script>
-</body>
-</html>
+{% endblock %}
+
+<!--
+<form>
+    <input type = 'button' value = '여행지 선택 완료' onclick = 'finishInputplaces()'>
+    <form action="" method="post">
+        {%csrf_token%}
+        {{form}}
+        <button>취소</button>
+        <button type='submit'>경로 추천</button>
+    </form>
+</form>
+-->

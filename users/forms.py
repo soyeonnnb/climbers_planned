@@ -4,8 +4,10 @@ from . import models
 
 class LoginForm(forms.Form):
 
-    email = forms.EmailField(widget = forms.EmailInput(attrs={"placeholder": "이메일"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "비밀번호"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "이메일"}))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "비밀번호"})
+    )
 
     def clean(self):
         email = self.cleaned_data.get("email")
@@ -19,6 +21,18 @@ class LoginForm(forms.Form):
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError("User Does Not Exist."))
 
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+
+        self.fields["email"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "text",
+            "placeholder": "아이디",
+            "name": "userID",
+            "maxlength": "20",
+        }
+
 
 class SignUpForm(forms.ModelForm):
     class Meta:
@@ -30,8 +44,12 @@ class SignUpForm(forms.ModelForm):
             "email": forms.EmailInput(attrs={"placeholder": "이메일"}),
         }
 
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "비밀번호"}))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "비밀번호 확인"}))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "비밀번호"})
+    )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={"placeholder": "비밀번호 확인"})
+    )
 
     def clean_email(self):
         email = self.cleaned_data.get("email")

@@ -5,3 +5,4 @@ from travels import models
 def main(request):
     alltravel = models.Travel.objects.all()
     return render(request, "core.html", {"alltravel": alltravel})
+

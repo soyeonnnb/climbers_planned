@@ -3,9 +3,7 @@ import os
 import math
 import random
 
-from numpy import square
-
-# from matplotlib import pyplot as plt
+from matplotlib import pyplot as plt
 
 from . import models as travels_models
 
@@ -118,7 +116,7 @@ class SolveTSPUsingACO:
                 self.edges[i][j] = self.edges[j][i] = self.Edge(
                     i,
                     j,
-                    self.distance_by_haversine(self, i, j),  # weight, 거리
+                    self.distance_by_haversine(i, j),  # weight, 거리
                     initial_pheromone,
                 )
         self.ants = [
@@ -192,11 +190,43 @@ class SolveTSPUsingACO:
             )
         )
 
+    def plot(
+        self,
+        line_width=1,
+        point_radius=math.sqrt(2.0),
+        annotation_size=8,
+        dpi=120,
+        save=True,
+        name=None,
+    ):
+        x = [self.nodes[i][0] for i in self.global_best_tour]
+        x.append(x[0])
+        y = [self.nodes[i][1] for i in self.global_best_tour]
+        y.append(y[0])
+        plt.plot(x, y, linewidth=line_width)
+        plt.scatter(x, y, s=math.pi * (point_radius**2.0))
+        plt.title(self.mode)
+        for i in self.global_best_tour:
+            plt.annotate(self.labels[i], self.nodes[i], size=annotation_size)
+        if save:
+            if name is None:
+                name = "{0}.png".format(self.mode)
+            plt.savefig(name, dpi=dpi)
+        plt.show()
+        plt.gcf().clear()
+
+    def get_abs(self, x):
+        if x >= 0:
+            return x
+        else:
+            return x * (-1)
+
+    # 하버사인 거리구하기
     def distance_by_haversine(self, i, j):
         radius = 6371  # 지구 반지름
         radian = math.pi / 180
-        delta_latitude = math.abs(self.nodes[i][0] - self.nodes[j][0]) * radian
-        delta_longitude = math.abs(self.nodes[i][1] - self.nodes[j][1]) * radian
+        delta_latitude = self.get_abs(self.nodes[i][0] - self.nodes[j][0]) * radian
+        delta_longitude = self.get_abs(self.nodes[i][1] - self.nodes[j][1]) * radian
 
         sin_delta_latitude = math.sin(delta_latitude / 2)
         sin_delta_longitude = math.sin(delta_longitude / 2)
@@ -230,5 +260,5 @@ def aco_run(travel, count_date):
             mode="MaxMin", colony_size=_colony_size, steps=_steps, nodes=_nodes
         )
         max_min.run()
-        # max_min.plot()
+        # max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

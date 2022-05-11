@@ -256,9 +256,14 @@ def aco_run(travel, count_date):
         _colony_size = 5
         _steps = 50  # 몇번의 step으로 결과를 낼 것인지
         _nodes = [(place.latitude, place.longitude, place.pk) for place in node_places]
+        _labels = [place.name for place in node_places]
         max_min = SolveTSPUsingACO(
-            mode="MaxMin", colony_size=_colony_size, steps=_steps, nodes=_nodes
+            mode="MaxMin",
+            colony_size=_colony_size,
+            steps=_steps,
+            nodes=_nodes,
+            labels=_labels,
         )
         max_min.run()
-        # max_min.plot(name=f"{travel.pk}-{i}")
+        max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

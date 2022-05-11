@@ -265,5 +265,5 @@ def aco_run(travel, count_date):
             labels=_labels,
         )
         max_min.run()
-        max_min.plot(name=f"{travel.pk}-{i}")
+        # max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

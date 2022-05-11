@@ -1,63 +1,38 @@
-<html lang="ko">
+{% extends 'base.html' %}
+{% block page_title %}회원가입{% endblock page_title %}
+{% block content %}
+<div class="main">
+	<div class="title">
+		<h1>회원가입 페이지</h1>
+	</div>
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link rel="stylesheet" href="css/css.css">
-</head>
+	<div class="container">
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4">
+			<div class="jumbotron" style="padding-top: 20px;">
+				<form action="{% url 'users:signup' %}" method="POST">
+					{% csrf_token %}
+					{{form.as_p}}
+					<h3 style="text-align: center;">회원가입</h3>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control" placeholder="비밀번호" name="userPassword"
+							maxlength="20">
+					</div>
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
+					</div>
+					<div class="form-group">
+						<input type="email" class="form-control" placeholder="닉네임" name="userNickname" maxlength="50">
+					</div>
 
-<body>
-	<div class="nav">
-		<div class="nav-item-right">
-			<div class="nav-tiem">
-				{% if user.is_authenticated %}
-				<h4>{{request.user}}님 안녕하세요!</h4>
-				<a href="{% url 'users:logout' %}">로그아웃</a>
-				{% else %}
-				<a href="{% url 'users:signup' %}">회원가입</a>
-				<a href="{% url 'users:login' %}">로그인</a>
-
-				{% endif %}
+					<input type="submit" class="btn btn-primary form-control" value="회원가입">
+				</form>
 			</div>
 		</div>
+		<div class="col-lg-4"></div>
 	</div>
-	<div class="main">
-		<div class="title">
-			<h1>회원가입 페이지</h1>
-		</div>
-
-		<div class="container">
-			<div class="col-lg-4"></div>
-			<div class="col-lg-4">
-				<div class="jumbotron" style="padding-top: 20px;">
-					<form action="{% url 'users:signup' %}" method="POST">
-						{% csrf_token %}
-						{{form.as_p}}
-						<h3 style="text-align: center;">회원가입</h3>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="비밀번호" name="userPassword"
-								maxlength="20">
-						</div>
-						<div class="form-group">
-							<input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
-						</div>
-						<div class="form-group">
-							<input type="email" class="form-control" placeholder="닉네임" name="userNickname"
-								maxlength="50">
-						</div>
-
-						<input type="submit" class="btn btn-primary form-control" value="회원가입">
-					</form>
-				</div>
-			</div>
-			<div class="col-lg-4"></div>
-		</div>
-	</div>
-</body>
-
-</html>
+</div>
+{% endblock %}

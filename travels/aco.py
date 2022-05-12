@@ -4,6 +4,7 @@ import math
 import random
 
 from matplotlib import pyplot as plt
+from matplotlib import font_manager, rc  # 한글폰트 사용
 
 from . import models as travels_models
 
@@ -199,6 +200,9 @@ class SolveTSPUsingACO:
         save=True,
         name=None,
     ):
+        font_path = "NanumBarunGothicLight.ttf"
+        font = font_manager.FontProperties(fname=font_path).get_name()
+        rc("font", family=font)
         x = [self.nodes[i][0] for i in self.global_best_tour]
         x.append(x[0])
         y = [self.nodes[i][1] for i in self.global_best_tour]
@@ -207,7 +211,11 @@ class SolveTSPUsingACO:
         plt.scatter(x, y, s=math.pi * (point_radius**2.0))
         plt.title(self.mode)
         for i in self.global_best_tour:
-            plt.annotate(self.labels[i], self.nodes[i], size=annotation_size)
+            plt.annotate(
+                self.labels[i],
+                (self.nodes[i][0], self.nodes[i][1]),
+                size=annotation_size,
+            )
         if save:
             if name is None:
                 name = "{0}.png".format(self.mode)
@@ -265,5 +273,6 @@ def aco_run(travel, count_date):
             labels=_labels,
         )
         max_min.run()
+        # 그래프 확인하고 싶으면 주석 빼기
         # max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

@@ -1,4 +1,3 @@
-
 import random
 from django.shortcuts import render, redirect
 
@@ -23,14 +22,14 @@ def createtravel(request):
             new_travel = models.Travel.objects.create(
                 name=city, start_date=start_date, end_date=end_date, user=user
             )
-            new_lodging = models.Lodging.objects.create(
+            models.Lodging.objects.create(
                 travel=new_travel,
                 name=lodging,
                 latitude=random.uniform(0, 5),
                 longitude=random.uniform(0, 5),
             )
             for i in range(10):
-                new_place = models.Place.objects.create(
+                models.Place.objects.create(
                     travel=new_travel,
                     name=site + str(i),
                     day=random.randint(1, count_date),

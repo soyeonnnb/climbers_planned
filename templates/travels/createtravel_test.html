@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block page_title %}여행지 생성{% endblock page_title %}
+{% block content %}
+<h1>여행지 추가</h1>
+<div id="map" style="width:100%;height:350px;"></div>
+<form action="" method="post">
+    {%csrf_token%}
+    {{travelform}}
+    --------
+    {{lodgingform}}
+    --------
+    {{placeformset.management_form}}
+    {% for form in placeformset %}
+    {{form}}
+    {% endfor %}
+    <button>취소</button>
+    <button type='submit'>경로 추천</button>
+
+</form>
+
+{% endblock %}

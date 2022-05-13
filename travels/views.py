@@ -7,6 +7,49 @@ from . import forms
 from . import models
 
 # Create your views here.
+def create_travel(request):
+    user = request.user
+    if request.method == "POST":
+        travelform = forms.TravelModelForm(request.POST)
+        lodgingform = forms.LodgingModelForm(request.POST)
+        placeformset = forms.PlaceFormset(request.POST)
+        if travelform.is_valid() and lodgingform.is_valid() and placeformset.is_valid():
+            travel = travelform.save(commit=False)
+            travel.user = user
+            travel.save()
+            lodging = lodgingform.save(commit=False)
+            lodging.travel = travel
+            ### lodging fake data###
+            lodging.latitude = 1
+            lodging.longitude = 1
+            lodging.save()
+            ### lodging fake data###
+            for form in placeformset:
+                place = form.save(commit=False)
+                place.travel = travel
+                ### place fake data ###
+                place.day = 1
+                place.order = 1
+                place.latitude = 1
+                place.longitude = 1
+                ### place fake data ###
+                place.save()
+            return redirect("travels:checkpath", pk=travel.pk)
+    else:
+        travelform = forms.TravelModelForm(request.GET or None)
+        lodgingform = forms.LodgingModelForm(request.GET or None)
+        placeformset = forms.PlaceFormset(queryset=models.Place.objects.none())
+    return render(
+        request,
+        "travels/createtravel_test.html",
+        {
+            "travelform": travelform,
+            "lodgingform": lodgingform,
+            "placeformset": placeformset,
+        },
+    )
+
+
 def createtravel(request):
     user = request.user
     if request.method == "POST":

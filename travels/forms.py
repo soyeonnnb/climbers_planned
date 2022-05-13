@@ -1,5 +1,39 @@
 from django import forms
+from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
+
+
+class TravelModelForm(forms.ModelForm):
+    class Meta:
+        model = Travel
+        fields = (
+            "name",
+            "start_date",
+            "end_date",
+            "color",
+        )
+        labels = {
+            "name": "여행지name",
+            "start_date": "여행지start_date",
+            "end_date": "여행지end_date",
+            "color": "여행지color",
+        }
+
+
+class LodgingModelForm(forms.ModelForm):
+    class Meta:
+        model = Lodging
+        fields = ("name",)
+        labels = {
+            "name": "숙소name",
+        }
+
+
+PlaceFormset = modelformset_factory(
+    Place,
+    fields=("name",),
+    extra=1,
+)
 
 
 class CreateTravelForm(forms.Form):

@@ -5,13 +5,14 @@
 <div id="map" style="width:100%;height:350px;"></div>
 <form action="" method="post">
     {%csrf_token%}
-    {{travelform}}
-    --------
-    {{lodgingform}}
-    --------
+    ----여행
+    {{travelform.as_p}}
+    --------숙소
+    {{lodgingform.as_p}}
+    --------장소
     {{placeformset.management_form}}
     {% for form in placeformset %}
-    {{form}}
+    {{form.as_p}}
     {% endfor %}
     <button>취소</button>
     <button type='submit'>경로 추천</button>

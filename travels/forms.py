@@ -3,6 +3,7 @@ from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
 
+# test
 class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
@@ -35,7 +36,7 @@ PlaceFormset = modelformset_factory(
     extra=1,
 )
 
-
+# CreateTravelForm
 class CreateTravelForm(forms.Form):
     def __init__(self, *args, **kwargs):
         site = []

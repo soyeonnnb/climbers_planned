@@ -2,6 +2,7 @@
 import os
 import math
 import random
+from xxlimited import foo
 
 from matplotlib import pyplot as plt
 from matplotlib import font_manager, rc  # 한글폰트 사용
@@ -94,6 +95,7 @@ class SolveTSPUsingACO:
         steps=100,
         nodes=None,
         labels=None,
+        lodging=False,
     ):  # 초기설정
         # rho만큼의 페로몬이 삭제됨. 즉 1.0-self.rho만큼의 페로몬만 남게됨
         self.mode = mode  # 여기서는 min_max로 돌림
@@ -107,6 +109,7 @@ class SolveTSPUsingACO:
         self.steps = steps
         self.num_nodes = len(nodes)  # 노드 개수
         self.nodes = nodes
+        self.lodging = lodging
         if labels is not None:
             self.labels = labels
         else:
@@ -249,6 +252,18 @@ class SolveTSPUsingACO:
 
     def save_route(self):
         num = 0
+
+        # 숙소가 있다면
+        if self.lodging:
+            for i in self.global_best_tour:
+                first_node_pk = self.global_best_tour.pop(0)
+                # 만약 가져온 first node 가 숙소 노드라면
+                if self.nodes[first_node_pk][3] == 0:
+                    break
+                # 아니면 맨 뒤에 추가
+                else:
+                    self.global_best_tour.append(first_node_pk)
+
         for i in self.global_best_tour:
             place_pk = self.nodes[i][2]
             place = travels_models.Place.objects.get(pk=place_pk)
@@ -259,20 +274,37 @@ class SolveTSPUsingACO:
 
 def aco_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
+    try:
+        lodging = travels_models.Lodging.objects.get(travel=travel)
+    except travels_models.Lodging.DoesNotExist:
+        lodging = None
     for i in range(1, count_date + 1):
         node_places = all_places.filter(day=i)
         _colony_size = 5
         _steps = 50  # 몇번의 step으로 결과를 낼 것인지
-        _nodes = [(place.latitude, place.longitude, place.pk) for place in node_places]
-        _labels = [place.name for place in node_places]
+        _nodes = []
+        _lodging = False
+        _labels = []
+
+        # 숙소 데이터가 있으면
+        if lodging != None:
+            _nodes.append((lodging.latitude, lodging.longitude, lodging.pk, 0))
+            _labels.append(lodging.name)
+            _lodging = True
+
+        for place in node_places:
+            _nodes.append((place.latitude, place.longitude, place.pk, 1))
+            _labels.append(place.name)
+
         max_min = SolveTSPUsingACO(
             mode="MaxMin",
             colony_size=_colony_size,
             steps=_steps,
             nodes=_nodes,
             labels=_labels,
+            lodging=_lodging,
         )
         max_min.run()
         # 그래프 확인하고 싶으면 주석 빼기
-        # max_min.plot(name=f"{travel.pk}-{i}")
+        max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

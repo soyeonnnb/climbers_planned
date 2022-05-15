@@ -11,12 +11,25 @@
     {{lodgingform.as_p}}
     --------장소
     {{placeformset.management_form}}
-    {% for form in placeformset %}
-    {{form.as_p}}
-    {% endfor %}
-    <button>취소</button>
-    <button type='submit'>경로 추천</button>
+    <div id="placeformset">
+        {% for form in placeformset %}
+        <p>
+            {{form}}
+            <button type="button" class="placeformset_del_button">❌</button>
+        </p>
+        {% endfor %}
+    </div>
+    <button type="button" class="placeformset_add_button">➕</button>
+    <div>
+        <button>취소</button>
+        <button type='submit'>경로 추천</button>
+    </div>
 
 </form>
+<br>
+<br>
+<br>
+<br>
+<br><br><br>
 
 {% endblock %}

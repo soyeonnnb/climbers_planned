@@ -30,11 +30,7 @@ class LodgingModelForm(forms.ModelForm):
         }
 
 
-PlaceFormset = modelformset_factory(
-    Place,
-    fields=("name",),
-    extra=1,
-)
+PlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)
 
 # CreateTravelForm
 class CreateTravelForm(forms.Form):

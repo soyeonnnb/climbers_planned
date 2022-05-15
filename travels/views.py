@@ -28,6 +28,10 @@ def create_travel(request):
             ### lodging fake data###
             for form in placeformset:
                 place = form.save(commit=False)
+                place_cd = form.cleaned_data
+                place_name = place_cd.get("name")
+                if place_name == None:
+                    continue
                 place.travel = travel
                 ### place fake data ###
                 place.day = 1

@@ -133,6 +133,7 @@ class SolveTSPUsingACO:
     def _add_pheromone(self, tour, distance, weight=1.0):  # 페로몬 뿌리기
         pheromone_to_add = self.pheromone_deposit_weight / distance
         for i in range(self.num_nodes):
+            # 개미가 지나온 길에 한하여 add_pheromone
             self.edges[tour[i]][tour[(i + 1) % self.num_nodes]].pheromone += (
                 weight * pheromone_to_add
             )
@@ -252,7 +253,6 @@ class SolveTSPUsingACO:
 
     def save_route(self):
         num = 0
-
         # 숙소가 있다면
         if self.lodging:
             for i in self.global_best_tour:
@@ -306,5 +306,5 @@ def aco_run(travel, count_date):
         )
         max_min.run()
         # 그래프 확인하고 싶으면 주석 빼기
-        max_min.plot(name=f"{travel.pk}-{i}")
+        # max_min.plot(name=f"{travel.pk}-{i}")
         max_min.save_route()

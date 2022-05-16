@@ -5,22 +5,31 @@
 <div id="map" style="width:100%;height:350px;"></div>
 <form action="" method="post">
     {%csrf_token%}
-    {{form}}
-    <button>취소</button>
-    <button type='submit'>경로 추천</button>
-
-</form>
-
-{% endblock %}
-
-<!--
-<form>
-    <input type = 'button' value = '여행지 선택 완료' onclick = 'finishInputplaces()'>
-    <form action="" method="post">
-        {%csrf_token%}
-        {{form}}
+    ----여행
+    {{travelform.as_p}}
+    --------숙소
+    {{lodgingform.as_p}}
+    --------장소
+    {{placeformset.management_form}}
+    <div id="placeformset">
+        {% for form in placeformset %}
+        <p>
+            {{form}}
+            <button type="button" class="placeformset_del_button">❌</button>
+        </p>
+        {% endfor %}
+    </div>
+    <button type="button" class="placeformset_add_button">➕</button>
+    <div>
         <button>취소</button>
         <button type='submit'>경로 추천</button>
-    </form>
+    </div>
+
 </form>
--->
+<br>
+<br>
+<br>
+<br>
+<br><br><br>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} #core.html
 {% block page_title %}메인화면{% endblock page_title %}
 {% block content %}
 <div class="title">
@@ -16,6 +16,8 @@
 {% endfor %}
 {% endif %}
 
+
+<span>여행지추가는 로그인시 보임</span>
 
 <div class="items">
     <button class="new" onclick="location.href='add.html'">

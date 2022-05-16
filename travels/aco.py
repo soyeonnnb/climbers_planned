@@ -2,7 +2,7 @@
 import math
 import random
 
-# 그래프 사진 다운받을 시 pip install matplotlib 하기
+# 그래프 사진 다운받을 시 pip install matplotlib 해주기
 # from matplotlib import pyplot as plt
 # from matplotlib import font_manager, rc  # 한글폰트 사용
 

@@ -1,11 +1,10 @@
 # import 항목
-import os
 import math
 import random
-from xxlimited import foo
 
-from matplotlib import pyplot as plt
-from matplotlib import font_manager, rc  # 한글폰트 사용
+# 그래프 사진 다운받을 시 pip install matplotlib 하기
+# from matplotlib import pyplot as plt
+# from matplotlib import font_manager, rc  # 한글폰트 사용
 
 from . import models as travels_models
 
@@ -295,6 +294,10 @@ def aco_run(travel, count_date):
         for place in node_places:
             _nodes.append((place.latitude, place.longitude, place.pk, 1))
             _labels.append(place.name)
+
+        # 해당 여행일자에 여행지가 하나도 없다면 다음 일자로 넘어감
+        if lodging != None and len(_nodes) == 1:
+            continue
 
         max_min = SolveTSPUsingACO(
             mode="MaxMin",

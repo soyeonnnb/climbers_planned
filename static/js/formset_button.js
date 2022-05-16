@@ -6,17 +6,21 @@ let placeFormsetNumber = 1;
 
 function makeFormsetP(number){
     const p = document.createElement("p");
+    // label 생성
     const label = document.createElement("label");
     label.for = `places-${number}-name`
     label.innerText="Name: "
+    // input 생성
     const input = document.createElement("input");
     input.type = "text";
     input.name = `places-${number}-name`;
     input.id=`id_places-${number}-name`
+    // input type="hidden" 생성
     const inputHidden = document.createElement("input");
     inputHidden.type = "hidden";
     inputHidden.name=`places-${number}-id`;
     inputHidden.id = `id_places-${number}-id`;
+    // 삭제 button 생성
     const button = document.createElement("button");
     button.innerText = "❌";
     button.addEventListener("click", formsetDel);
@@ -27,16 +31,17 @@ function makeFormsetP(number){
     return p;
 }
 
+// + 버튼 클릭시 폼 생성
 function formsetAdd(){
     const p = makeFormsetP(placeFormsetNumber);
     placeFormsetNumber ++ ;
     inputTotalForm.value = placeFormsetNumber;
     placeFormset.appendChild(p);
 }
+
+// x 버튼 클릭시 폼 삭제
 function formsetDel(event){
     const p = event.target.parentElement;
-    p.style.display = "none";
-
     p.remove();
 }
 

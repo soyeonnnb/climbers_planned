@@ -24,7 +24,7 @@ class Place(models.Model):
     travel = models.ForeignKey(
         Travel, on_delete=models.CASCADE, related_name="place"
     )  # 여행
-    name = models.CharField(max_length=100)  # 장소명
+    name = models.CharField(max_length=100, null=True)  # 장소명
     day = models.IntegerField()  # 장소 여행 날짜
     order = models.IntegerField()  # 장소 방문 순서
     latitude = models.FloatField()  # 위도(x)

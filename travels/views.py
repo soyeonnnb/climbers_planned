@@ -1,5 +1,5 @@
 import random 
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from . import forms
 from . import models
 from . import aco
@@ -60,5 +60,25 @@ def create_travel(request):
 
 def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
-    place = models.Place.objects.filter(travel=pk).order_by('order')
+    place = list(models.Place.objects.get(travel=pk))
     return render(request, "travels/checkpath.html", {"travel": travel, "place":place})
+
+def savepath(request): #경로 저장
+    # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨주므로 db에 저장할 필요 없는 것 같은데.. 맞나요?
+    # 시퀀스 다이어그램 상 다시 저장해주어야 하긴 하는데.. 갱신 아닌지.. 근데 갱신할 필요가 없는 것 같아서요
+    # travel = models.Travel.objects.get(pk=pk)
+    # place = models.Place.objects.filter(travel=pk).order_by('order')
+    # #db 저장 안 해도 되나?
+    return redirect('core')
+
+def checktravel(request, pk): 
+    travel = get_object_or_404(models.Travel, pk=pk)
+    lodging = models.Lodging.objects.get(travel=pk)
+    place = models.Place.objects.get(travel=pk)
+    # lodging = models.Lodging.objects.filter(travel=pk)
+    # place = models.Place.objects.filter(travel=pk).order_by('order')
+    # print("travel=",travel.name)
+    # print("lodging=", lodging.name)
+    # print("place=",place.name)
+    return render(request, 'travels/checktravel.html', {'travel':travel, 'lodging':lodging, 'place':place})
+

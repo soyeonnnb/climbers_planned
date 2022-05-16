@@ -4,7 +4,6 @@ from . import forms
 from . import models
 from . import aco
 
-
 def create_travel(request):
     user = request.user
     if request.method == "POST":
@@ -60,8 +59,11 @@ def create_travel(request):
 
 def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
-    place = list(models.Place.objects.get(travel=pk))
-    return render(request, "travels/checkpath.html", {"travel": travel, "place":place})
+    places = []
+    for p in models.Place.objects.filter(travel=pk).order_by('order'):
+        places.append(p)
+    # places = sorted(places, key=models.Place.day)
+    return render(request, "travels/checkpath.html", {"travel": travel, "places":places})
 
 def savepath(request): #경로 저장
     # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨주므로 db에 저장할 필요 없는 것 같은데.. 맞나요?
@@ -74,11 +76,9 @@ def savepath(request): #경로 저장
 def checktravel(request, pk): 
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)
-    place = models.Place.objects.get(travel=pk)
-    # lodging = models.Lodging.objects.filter(travel=pk)
-    # place = models.Place.objects.filter(travel=pk).order_by('order')
-    # print("travel=",travel.name)
-    # print("lodging=", lodging.name)
-    # print("place=",place.name)
-    return render(request, 'travels/checktravel.html', {'travel':travel, 'lodging':lodging, 'place':place})
+    places = []
+    for p in models.Place.objects.filter(travel=pk):
+        places.append(p)
+    # places = sorted(places, key=models.Place.day)
+    return render(request, 'travels/checktravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
 

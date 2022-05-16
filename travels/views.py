@@ -1,15 +1,14 @@
 import random
 from django.shortcuts import render, redirect
-
 from . import forms
 from . import models
-
 from . import aco
 
 
 def create_travel(request):
     user = request.user
     if request.method == "POST":
+
         travelform = forms.TravelModelForm(request.POST, prefix="travel")
         lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
         placeformset = forms.PlaceFormset(request.POST, prefix="places")
@@ -63,3 +62,4 @@ def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
     place = models.Place.objects.filter(travel=pk).order_by("order")
     return render(request, "travels/checkpath.html", {"travel": travel, "place": place})
+

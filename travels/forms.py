@@ -28,5 +28,4 @@ class LodgingModelForm(forms.ModelForm):
             "name": "숙소 name",
         }
 
-
 PlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)

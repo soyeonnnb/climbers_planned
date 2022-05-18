@@ -81,4 +81,3 @@ def checktravel(request, pk):
         places.append(p)
     # places = sorted(places, key=models.Place.day)
     return render(request, 'travels/checktravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
-

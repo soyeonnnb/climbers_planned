@@ -1,3 +1,5 @@
-from django.test import TestCase
+def getValue():
+    print("value")
 
-# Create your tests here.
+if __name__ == '__main__':
+    getValue()

@@ -6,15 +6,19 @@
 </div>
 
 {% if user.is_authenticated %}
-<a href="{% url 'travels:createtravel' %}">여행지 추가</a>
-{% for eachtravel in alltravel %}
+    <a href="{% url 'travels:createtravel' %}">여행지 추가</a>
 
-{{eachtravel.name}}
-{{eachtravel.start_date}}
-{{eachtravel.end_date}}
-{{eachtravel.id}}
-{% endfor %}
+    {% for eachtravel in alltravel %}
+        <a href="{% url 'travels:checktravel' eachtravel.id %}">
+            {{eachtravel.name}}
+            {{eachtravel.start_date}}
+            {{eachtravel.end_date}}
+            <br>
+        </a>
+    {% endfor %}
 {% endif %}
+
+
 <span>여행지추가는 로그인시 보임</span>
 
 <div class="items">

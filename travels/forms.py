@@ -2,7 +2,6 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
-
 class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
@@ -27,6 +26,5 @@ class LodgingModelForm(forms.ModelForm):
         labels = {
             "name": "숙소 name",
         }
-
 
 PlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)

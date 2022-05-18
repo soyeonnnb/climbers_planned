@@ -62,4 +62,3 @@ def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
     place = models.Place.objects.filter(travel=pk).order_by("order")
     return render(request, "travels/checkpath.html", {"travel": travel, "place": place})
-

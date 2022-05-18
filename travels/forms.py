@@ -2,7 +2,6 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
-
 class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel

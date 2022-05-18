@@ -61,9 +61,4 @@ def create_travel(request):
 def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
     place = models.Place.objects.filter(travel=pk).order_by("order")
-<<<<<<< HEAD
     return render(request, "travels/checkpath.html", {"travel": travel, "place": place})
-=======
-    return render(request, "travels/checkpath.html", {"travel": travel, "place": place})
-
->>>>>>> 5c8888e540f4bc6a57dac0d022cc65c5b2d6c9d3

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
 @import url(media.css);
 @import url(style.css);
@@ -76,4 +77,84 @@
     background-color:rgb(104, 135, 238);
     border-color : white;
     border-radius:15px;
+=======
+/*
+@import url(media.css);
+@import url(style.css);
+*/
+@import url(bootstrap-theme.css);
+@import url(bootstrap.css);
+@import url(bootstrap-theme.min.css);
+@import url(bootstrap.min.css);
+.nav{
+    height: 70px;
+    background-color: rgba(189, 231, 247, 0.966);
+    display:flex;
+    align-items:center;
+  }
+.nav-item{
+    margin-left:20px;
+}
+.nav-item-right{
+    display:flex;
+    margin-left:auto;
+  }
+
+.main{
+          width:1000px;
+          margin: 0 auto;
+          margin-top : 60px;
+    }
+.title{
+    text-align:left;
+    font-size:3rem;
+    font-weight:bold;
+}
+.items{
+    display: flexbox;
+    width: 1000px;
+    margin : 10px;
+    margin-top : 60px;
+    margin-left: right;
+}
+.new{
+    width:100px;
+    height: 150px;
+    margin: 1px;
+    font-size:3rem;
+    font-weight: bold;
+    color:white;
+    background-color:rgb(128, 128, 128);
+    border-color : white;
+    border-radius:15px;
+}
+.plan{
+    width:100px;
+    height: 150px;
+    margin: 10px;
+    font-size: 3rem;
+    font-weight: bold;
+    color:black;
+    border-color : white;
+    border-radius:15px;
+}
+
+.table{
+    width:500px;
+    margin: 0 auto;
+    margin-top : 60px;
+}
+
+.act{
+    width:100px;
+    height: 40px;
+    margin: 1px;
+    font-size:1.5rem;
+    font-weight: bold;
+    color:white;
+    text-align: center;
+    background-color:rgb(104, 135, 238);
+    border-color : white;
+    border-radius:15px;
+>>>>>>> 5c8888e540f4bc6a57dac0d022cc65c5b2d6c9d3
 }

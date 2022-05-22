@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from . import forms
 from . import models
 from . import aco
+from django.template import RequestContext
 
 def create_travel(request):
     user = request.user
@@ -116,15 +117,17 @@ def updatetravel(request, pk):
         return redirect("travels:checktravel", kwargs={"pk": pk})
 
     else:
-        travel_form = forms.TravelModelForm(instance=travel)
-        lodging_form = forms.LodgingModelForm(instance=lodging)
-        placeformset = forms.PlaceFormset(instance=places)
-    
+        travelform = forms.TravelModelForm(instance=travel)
+        lodgingform = forms.LodgingModelForm(instance=lodging)
+        placeformset = forms.PlaceFormset(queryset=models.Place.objects.all())
+    print(placeformset)
     return render(
         request,
         "travels/updatetravel.html",
-        {"travel_form": travel_form, "lodging_form": lodging_form, "placeformset": placeformset},
+        {"travelform": travelform, "lodgingform": lodgingform, "placeformset": placeformset},
+        context_instance=RequestContext(request),
     )
+
 
 # def updatetravel(request, pk):
 #     travel = get_object_or_404(models.Travel, pk=pk)

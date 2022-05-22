@@ -1,6 +1,6 @@
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표(제주도 카카오 본사)
+    center: new kakao.maps.LatLng(37.5973165519067, 127.058726610686),
     level: 3 // 지도의 확대 레벨
 };  
 
@@ -13,8 +13,8 @@ var geocoder = new kakao.maps.services.Geocoder();
 var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
 infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
-var places = []; // 여행지 지번 주소 배열(도로명 주소가 없는 곳도 있음)
-var coordinates = []; // 여행지 좌표 배열
+// var places = []; // 여행지 지번 주소 배열(도로명 주소가 없는 곳도 있음)
+// var coordinates = []; // 여행지 좌표 배열
 
 // 마커를 담을 배열입니다
 var markers = [];
@@ -22,34 +22,31 @@ var markers = [];
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
 
-// 주소로 좌표를 검색합니다
-geocoder.addressSearch('서울특별시 동대문구 이문로 107', function(result, status) {
+// // 주소로 좌표를 검색합니다
+// geocoder.addressSearch('서울특별시 동대문구 이문로 107', function(result, status) {
     
-// 정상적으로 검색이 완료됐으면 
- if (status === kakao.maps.services.Status.OK) {
+// // 정상적으로 검색이 완료됐으면 
+//  if (status === kakao.maps.services.Status.OK) {
     
-    //result 배열 -> 검색 결과의 배열
-    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+//     //result 배열 -> 검색 결과의 배열
+//     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-    // // 결과값으로 받은 위치를 마커로 표시합니다
-    // var marker = new kakao.maps.Marker({
-    //     map: map,
-    //     position: coords
-    // });
+//     // // 결과값으로 받은 위치를 마커로 표시합니다
+//     // var marker = new kakao.maps.Marker({
+//     //     map: map,
+//     //     position: coords
+//     // });
 
-    // 인포윈도우로 장소에 대한 설명을 표시합니다
-    // var infowindow = new kakao.maps.InfoWindow({
-    //     content: '<div style="width:150px;text-align:center;padding:6px 0;">한국외대</div>'
-    // });
-    // infowindow.open(map, marker);
+//     // 인포윈도우로 장소에 대한 설명을 표시합니다
+//     // var infowindow = new kakao.maps.InfoWindow({
+//     //     content: '<div style="width:150px;text-align:center;padding:6px 0;">한국외대</div>'
+//     // });
+//     // infowindow.open(map, marker);
 
-    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-    map.setCenter(coords);
-} 
-});   
-
-
-
+//     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+//     map.setCenter(coords);
+// } 
+// });   
 
 
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
@@ -72,19 +69,19 @@ searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
         infowindow.setContent(content);
         infowindow.open(map, marker);
 
-        // 여행지 배열 끝에 클릭한 곳의 지번 주소 추가
-        places.push(result[0].address.address_name);
-        coordinates.push(mouseEvent.latLng);
+        // // 여행지 배열 끝에 클릭한 곳의 지번 주소 추가
+        // places.push(result[0].address.address_name);
+        // coordinates.push(mouseEvent.latLng);
         
-        var placesList = ""
+        // var placesList = ""
 
-        for ( i = 0; i < places.length; i++ ) {
-            placesList += places[i];
-            placesList += '(' + coordinates[i] + ')';
-            placesList += '\n'
-        }
+        // for ( i = 0; i < places.length; i++ ) {
+        //     placesList += places[i];
+        //     placesList += '(' + coordinates[i] + ')';
+        //     placesList += '\n'
+        // }
         
-        alert('현재 여행 경로는\n' + placesList + '입니다')
+        // alert('현재 여행 경로는\n' + placesList + '입니다')
     }
 });
 });
@@ -136,36 +133,44 @@ function placesSearchCB(data, status, pagination) {
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
-    var listEl = document.getElementById('placesList'), 
-    menuEl = document.getElementById('menu_wrap'),
-    fragment = document.createDocumentFragment(), 
-    bounds = new kakao.maps.LatLngBounds(), 
-    listStr = '';
+    var listEl = document.getElementById('placesList');
+    var menuEl = document.getElementById('menu_wrap');
+    var fragment = document.createDocumentFragment();
+    var place = function(x, y, address_name){
+        this.x = x;
+        this.y = y;
+        this.address_name = address_name;
+    }
+    var coorArr = new Array();
+    //var bounds = new kakao.maps.LatLngBounds();
     
     // 검색 결과 목록에 추가된 항목들을 제거합니다
     removeAllChildNods(listEl);
 
     // 지도에 표시되고 있는 마커를 제거합니다
     removeMarker();
+
+    map.setCenter(new kakao.maps.LatLng(places[0].y, places[0].x));
+
+    // for ( var i=0; i<places.length; i++ )
+    // {
+    //     coorArr[i] = new place(places[i].x, places[i].y, places[i].address_name);
+    // }
     
     for ( var i=0; i<places.length; i++ ) {
-
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         // LatLngBounds 객체에 좌표를 추가합니다
-        bounds.extend(placePosition);
+        //bounds.extend(placePosition);
 
-        // 마커와 검색결과 항목에 mouseover 했을때
-        // 해당 장소에 인포윈도우에 장소명을 표시합니다
-        // mouseout 했을 때는 인포윈도우를 닫습니다
-        (function(marker, title) {
+        // 마커, itemEl 상호작용
+        // 이 부분에서 .py로 지번 주소 보내기
+        (function(marker, address, title, x, y) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
-                //alert('marker에 mouseover')
             });
 
             kakao.maps.event.addListener(marker, 'mouseout', function() {
@@ -173,14 +178,17 @@ function displayPlaces(places) {
             });
 
             itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);                
-                //alert('itemEl에 onmouseover')
+                displayInfowindow(marker, title);
             };
 
             itemEl.onmouseout =  function () {
                 infowindow.close();
             };
-        })(marker, places[i].place_name);
+
+            itemEl.onclick = function (){
+                //alert(address);
+            }
+        })(marker, places[i].address_name, places[i].place_name, places[i].x, places[i].y);
 
         fragment.appendChild(itemEl);
     }
@@ -190,14 +198,14 @@ function displayPlaces(places) {
     menuEl.scrollTop = 0;
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    map.setBounds(bounds);
+    //map.setBounds(bounds);
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
 
-    var el = document.createElement('li'),
-    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+    var el = document.createElement('li');
+    var itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
                 '<div class="info">' +
                 '   <h5>' + places.place_name + '</h5>';
 
@@ -246,7 +254,7 @@ function removeMarker() {
     markers = [];
 }
 
-// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+// 검색결과 목록 하단에 페이지번호를 표시하는 함수입니다
 function displayPagination(pagination) {
     var paginationEl = document.getElementById('pagination'),
         fragment = document.createDocumentFragment(),
@@ -300,17 +308,17 @@ function removeAllChildNods(el) {
 
 
 
-//지도 클릭 관련 함수(여행지)
-function finishInputplaces() {
-    var placesList = ""
+// //지도 클릭 관련 함수(여행지)
+// function finishInputplaces() {
+//     var placesList = ""
 
-    for ( i = 0; i < places.length; i++ ) {
-        placesList += places[i];
-        placesList += '\n'
-    }
+//     for ( i = 0; i < places.length; i++ ) {
+//         placesList += places[i];
+//         placesList += '\n'
+//     }
 
-    alert('선택한 여행 경로는\n' + placesList + '입니다')
-    }
+//     alert('선택한 여행 경로는\n' + placesList + '입니다')
+// }
 
 function searchAddrFromCoords(coords, callback) {
 // 좌표로 행정동 주소 정보를 요청합니다

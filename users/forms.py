@@ -28,10 +28,19 @@ class LoginForm(forms.Form):
             "class": "form-control",
             "id": "numberInput",
             "type": "text",
-            "placeholder": "아이디",
+            "placeholder": "이메일",
             "name": "userID",
             "maxlength": "20",
         }
+        self.fields["password"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호",
+            "name": "userPassword",
+            "maxlength": "20",
+        }
+
 
 
 class SignUpForm(forms.ModelForm):
@@ -75,3 +84,39 @@ class SignUpForm(forms.ModelForm):
         user.username = email
         user.set_password(password)
         user.save()
+
+    def __init__(self, *args, **kwargs):
+        super(SignUpForm, self).__init__(*args, **kwargs)
+
+        self.fields["email"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "text",
+            "placeholder": "이메일",
+            "name": "userID",
+            "maxlength": "20",
+        }
+        self.fields["password"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호",
+            "name": "userPassword",
+            "maxlength": "20",
+        }
+        self.fields["name"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "text",
+            "placeholder": "이름",
+            "name": "userName",
+            "maxlength": "20",
+        }
+        self.fields["nickname"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "text",
+            "placeholder": "닉네임",
+            "name": "userNickname",
+            "maxlength": "20",
+        }

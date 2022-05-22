@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 python-decouple = "*"
 matplotlib = "*"
+pandas = "*"
+sklearn = "*"
 
 [dev-packages]
 black = "*"

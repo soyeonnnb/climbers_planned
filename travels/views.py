@@ -44,11 +44,9 @@ def create_travel(request):
             aco.aco_run(travel, count_date, shell=False)
             return redirect("travels:checkpath", pk=travel.pk)
     else:
-        travelform = forms.CreateTravelModelForm(request.GET or None, prefix="travel")
-        lodgingform = forms.CreateLodgingModelForm(
-            request.GET or None, prefix="lodging"
-        )
-        placeformset = forms.CreatePlaceFormset(
+        travelform = forms.TravelModelForm(request.GET or None, prefix="travel")
+        lodgingform = forms.LodgingModelForm(request.GET or None, prefix="lodging")
+        placeformset = forms.PlaceFormset(
             queryset=models.Place.objects.none(), prefix="places"
         )
     return render(
@@ -95,9 +93,10 @@ def checktravel(request, pk):
         {"travel": travel, "lodging": lodging, "places": places},
     )
 
+
 def addplace(request):
     return render(request, "travels/addplace.html")
-  
+
 
 def updatetravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
@@ -116,7 +115,7 @@ def updatetravel(request, pk):
             travel_start_date = travelform.cleaned_data["travel_start_date"]
             travel_end_date = travelform.cleaned_data["travel_end_date"]
             lodging_name = lodgingform.cleaned_data["lodging_name"]
-    
+
             travel.name = travel_name
             travel.start_date = travel_start_date
             travel.end_date = travel_end_date
@@ -125,7 +124,7 @@ def updatetravel(request, pk):
             for place in places:
                 place_name = placeformset.cleaned_data["place_name"]
                 place.name = place_name
-                
+
             travel.save()
             lodging.save()
             places.save()
@@ -139,7 +138,11 @@ def updatetravel(request, pk):
     return render(
         request,
         "travels/updatetravel.html",
-        {"travelform": travelform, "lodgingform": lodgingform, "placeformset": placeformset},
+        {
+            "travelform": travelform,
+            "lodgingform": lodgingform,
+            "placeformset": placeformset,
+        },
         context_instance=RequestContext(request),
     )
 

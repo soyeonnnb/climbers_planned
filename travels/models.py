@@ -15,8 +15,6 @@ class Travel(models.Model):
     created_at = models.DateField(auto_now_add=True)  # 생성 날짜
     updated_at = models.DateField(auto_now=True)  # 수정 날짜
     color = models.CharField(max_length=20)  # 고유색
-    latitude = models.FloatField() #위도
-    longitude = models.FloatField() #경도
 
 
 class Place(models.Model):

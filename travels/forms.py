@@ -11,16 +11,12 @@ class TravelModelForm(forms.ModelForm):
             "start_date",
             "end_date",
             "color",
-            "latitude",
-            "longitude",
         )
         labels = {
             "name": "여행지 name",
             "start_date": "여행지 start_date",
             "end_date": "여행지 end_date",
             "color": "여행지 color",
-            "latitude": "여행지 위도",
-            "longitude": "여행지 경도",
         }
 
         widgets = {
@@ -48,10 +44,13 @@ class LodgingModelForm(forms.ModelForm):
             "longitude": "숙소 경도",
         }
 
+
 PlaceFormset = modelformset_factory(
-    Place, 
+    Place,
     fields=(
         "name",
         "latitude",
         "longitude",
-    ), extra=1)
+    ),
+    extra=1,
+)

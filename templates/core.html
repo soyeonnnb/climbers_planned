@@ -7,8 +7,8 @@
 
 <div class="items">
     {% if user.is_authenticated %}
-    <button class="new" onclick = "location.href='{% url 'travels:createtravel' %}'"> + </button>
-    
+    <button class="new" onclick="location.href='{% url 'travels:createtravel' %}'"> + </button>
+
     {% for eachtravel in alltravel %}
     <button class="plan" onclick="location.href='{% url 'travels:checktravel' eachtravel.id %}'">
         {{eachtravel.name}}
@@ -20,5 +20,6 @@
     </button>
     {% endfor %}
     {% endif %}
-    
+
 </div>
+{% endblock %}

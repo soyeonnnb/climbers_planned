@@ -31,4 +31,3 @@ def kmeans_run(travel):
 
     print(df_allplace)
     print(travel_schedule_json)
-

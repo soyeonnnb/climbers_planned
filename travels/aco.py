@@ -3,8 +3,8 @@ import math
 import random
 
 # 그래프 사진 다운받을 시 pip install matplotlib 해주기
-from matplotlib import pyplot as plt
-from matplotlib import font_manager, rc  # 한글폰트 사용
+# from matplotlib import pyplot as plt
+# from matplotlib import font_manager, rc  # 한글폰트 사용
 
 from . import models as travels_models
 
@@ -324,5 +324,5 @@ def aco_run(travel, count_date, shell=True):
             name = f"{travel.pk}"
             title = f'"{travel.name}"'
             # 그래프 확인하고 싶으면 주석 빼기
-        max_min.plot(name=name, color=i, shell=shell, title=title)
+        # max_min.plot(name=name, color=i, shell=shell, title=title)
         max_min.save_route()

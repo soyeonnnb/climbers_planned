@@ -6,7 +6,10 @@ from . import aco
 from . import kmeans
 from django.template import RequestContext
 
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
 def create_travel(request):
     user = request.user
     if request.method == "POST":
@@ -60,6 +63,7 @@ def create_travel(request):
     )
 
 
+@login_required
 def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
     places = []
@@ -71,6 +75,7 @@ def checkpath(request, pk):
     )
 
 
+@login_required
 def savepath(request):  # 경로 저장
     # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨주므로 db에 저장할 필요 없는 것 같은데.. 맞나요?
     # 시퀀스 다이어그램 상 다시 저장해주어야 하긴 하는데.. 갱신 아닌지.. 근데 갱신할 필요가 없는 것 같아서요
@@ -80,6 +85,7 @@ def savepath(request):  # 경로 저장
     return redirect("core")
 
 
+@login_required
 def checktravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)
@@ -94,10 +100,12 @@ def checktravel(request, pk):
     )
 
 
+@login_required
 def addplace(request):
     return render(request, "travels/addplace.html")
 
 
+@login_required
 def updatetravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)
@@ -147,6 +155,7 @@ def updatetravel(request, pk):
     )
 
 
+# @login_required
 # def updatetravel(request, pk):
 #     travel = get_object_or_404(models.Travel, pk=pk)
 #     lodging = models.Lodging.objects.get(travel=pk)

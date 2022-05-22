@@ -15,13 +15,14 @@
 					{{form.as_p}}
 					<h3 style="text-align: center;">회원가입</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+						{{form.email}}
 					</div>
 					<div class="form-group">
 						<input type="password" class="form-control" placeholder="비밀번호" name="userPassword"
 							maxlength="20">
 					</div>
 					<div class="form-group">
+						{{form.name}}
 						<input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
 					</div>
 					<div class="form-group">

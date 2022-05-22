@@ -27,11 +27,11 @@ class SolveTSPUsingACO:
             self.distance = 0.0
 
         def _select_node(self):  # Node 선택
-            roulette_wheel = 0.0  # 룰렛 휠
+            roulette_wheel = 0.0  # 룰렛 휠(전체)
             unvisited_nodes = [
                 node for node in range(self.num_nodes) if node not in self.tour
             ]  # 방문하지 않은 노드
-            heuristic_total = 0.0
+            heuristic_total = 0.0  # 방문하지 않은 노드까지의 거리의 총 합
             for unvisited_node in unvisited_nodes:
                 heuristic_total += self.edges[self.tour[-1]][unvisited_node].weight
             for unvisited_node in unvisited_nodes:
@@ -45,6 +45,8 @@ class SolveTSPUsingACO:
                     ),
                     self.beta,
                 )
+                # edge에 대한 페로몬의 영향력과 만족도의 영향력을 곱함.
+                # 해당 노드를 선택할 확률이라고 이해하면 편함
             random_value = random.uniform(
                 0.0, roulette_wheel
             )  # 0.0과 roulette_wheel 사이의 랜덤한 실수 반환
@@ -96,6 +98,8 @@ class SolveTSPUsingACO:
         labels=None,
         lodging=False,
     ):  # 초기설정
+        # alpha는 edge에 뿌려져 있는 페로몬의 영향력
+        # beta는 edge에 대한 만족도(보통 초기에 주어지는 값.)의 영향력.
         # rho만큼의 페로몬이 삭제됨. 즉 1.0-self.rho만큼의 페로몬만 남게됨
         self.mode = mode  # 여기서는 min_max로 돌림
         self.colony_size = colony_size
@@ -272,7 +276,9 @@ class SolveTSPUsingACO:
 
 
 def aco_run(travel, count_date):
-    all_places = travels_models.Place.objects.filter(travel=travel)
+    travel_id = travel.id
+    print(travel_id)
+    all_places = travels_models.Place.objects.filter(travel=travel_id)
     try:
         lodging = travels_models.Lodging.objects.get(travel=travel)
     except travels_models.Lodging.DoesNotExist:

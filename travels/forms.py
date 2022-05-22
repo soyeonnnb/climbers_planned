@@ -2,7 +2,8 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
-class TravelModelForm(forms.ModelForm):
+
+class CreateTravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
         fields = (
@@ -18,8 +19,13 @@ class TravelModelForm(forms.ModelForm):
             "color": "여행지 color",
         }
 
+        widgets = {
+            "start_date": forms.DateInput(attrs={"class": "name"}),
+            "end_date": forms.DateInput(attrs={"class": "form-control", "rows": 10}),
+        }
 
-class LodgingModelForm(forms.ModelForm):
+
+class CreateLodgingModelForm(forms.ModelForm):
     class Meta:
         model = Lodging
         fields = ("name",)
@@ -27,4 +33,5 @@ class LodgingModelForm(forms.ModelForm):
             "name": "숙소 name",
         }
 
-PlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)
+
+CreatePlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)

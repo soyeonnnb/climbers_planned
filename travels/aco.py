@@ -3,8 +3,8 @@ import math
 import random
 
 # 그래프 사진 다운받을 시 pip install matplotlib 해주기
-# from matplotlib import pyplot as plt
-# from matplotlib import font_manager, rc  # 한글폰트 사용
+from matplotlib import pyplot as plt
+from matplotlib import font_manager, rc  # 한글폰트 사용
 
 from . import models as travels_models
 
@@ -27,11 +27,11 @@ class SolveTSPUsingACO:
             self.distance = 0.0
 
         def _select_node(self):  # Node 선택
-            roulette_wheel = 0.0  # 룰렛 휠
+            roulette_wheel = 0.0  # 룰렛 휠(전체)
             unvisited_nodes = [
                 node for node in range(self.num_nodes) if node not in self.tour
             ]  # 방문하지 않은 노드
-            heuristic_total = 0.0
+            heuristic_total = 0.0  # 방문하지 않은 노드까지의 거리의 총 합
             for unvisited_node in unvisited_nodes:
                 heuristic_total += self.edges[self.tour[-1]][unvisited_node].weight
             for unvisited_node in unvisited_nodes:
@@ -45,6 +45,8 @@ class SolveTSPUsingACO:
                     ),
                     self.beta,
                 )
+                # edge에 대한 페로몬의 영향력과 만족도의 영향력을 곱함.
+                # 해당 노드를 선택할 확률이라고 이해하면 편함
             random_value = random.uniform(
                 0.0, roulette_wheel
             )  # 0.0과 roulette_wheel 사이의 랜덤한 실수 반환
@@ -96,6 +98,8 @@ class SolveTSPUsingACO:
         labels=None,
         lodging=False,
     ):  # 초기설정
+        # alpha는 edge에 뿌려져 있는 페로몬의 영향력
+        # beta는 edge에 대한 만족도(보통 초기에 주어지는 값.)의 영향력.
         # rho만큼의 페로몬이 삭제됨. 즉 1.0-self.rho만큼의 페로몬만 남게됨
         self.mode = mode  # 여기서는 min_max로 돌림
         self.colony_size = colony_size
@@ -202,17 +206,21 @@ class SolveTSPUsingACO:
         dpi=120,
         save=True,
         name=None,
+        color=0,
+        shell=False,
+        title="",
     ):
         font_path = "NanumBarunGothicLight.ttf"
         font = font_manager.FontProperties(fname=font_path).get_name()
         rc("font", family=font)
+        c = ["b", "g", "r", "c", "y", "m", "k", "w"]
         x = [self.nodes[i][0] for i in self.global_best_tour]
         x.append(x[0])
         y = [self.nodes[i][1] for i in self.global_best_tour]
         y.append(y[0])
-        plt.plot(x, y, linewidth=line_width)
-        plt.scatter(x, y, s=math.pi * (point_radius**2.0))
-        plt.title(self.mode)
+        plt.plot(x, y, linewidth=line_width, c=c[color % 8])
+        plt.scatter(x, y, s=math.pi * (point_radius**2.0), c=c[color])
+        plt.title(title)
         for i in self.global_best_tour:
             plt.annotate(
                 self.labels[i],
@@ -224,7 +232,8 @@ class SolveTSPUsingACO:
                 name = "{0}.png".format(self.mode)
             plt.savefig(name, dpi=dpi)
         plt.show()
-        plt.gcf().clear()
+        if shell:
+            plt.gcf().clear()
 
     def get_abs(self, x):
         if x >= 0:
@@ -271,7 +280,7 @@ class SolveTSPUsingACO:
             num += 1
 
 
-def aco_run(travel, count_date):
+def aco_run(travel, count_date, shell=True):
     all_places = travels_models.Place.objects.filter(travel=travel)
     try:
         lodging = travels_models.Lodging.objects.get(travel=travel)
@@ -308,6 +317,12 @@ def aco_run(travel, count_date):
             lodging=_lodging,
         )
         max_min.run()
-        # 그래프 확인하고 싶으면 주석 빼기
-        # max_min.plot(name=f"{travel.pk}-{i}")
+        if shell:
+            name = f"{travel}-{i}"
+            title = f"{i}일차"
+        else:
+            name = f"{travel.pk}"
+            title = f'"{travel.name}"'
+            # 그래프 확인하고 싶으면 주석 빼기
+        max_min.plot(name=name, color=i, shell=shell, title=title)
         max_min.save_route()

@@ -1,9 +1,10 @@
 /*
 @import url(media.css);
 @import url(style.css);
-*/
-@import url(bootstrap-theme.css);
 @import url(bootstrap.css);
+*/
+@import url(add_place.css);
+@import url(bootstrap-theme.css);
 @import url(bootstrap-theme.min.css);
 @import url(bootstrap.min.css);
 .nav{

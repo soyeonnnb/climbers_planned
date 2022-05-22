@@ -3,7 +3,7 @@ from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
 
-class CreateTravelModelForm(forms.ModelForm):
+class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
         fields = (
@@ -11,12 +11,16 @@ class CreateTravelModelForm(forms.ModelForm):
             "start_date",
             "end_date",
             "color",
+            "latitude",
+            "longitude",
         )
         labels = {
             "name": "여행지 name",
             "start_date": "여행지 start_date",
             "end_date": "여행지 end_date",
             "color": "여행지 color",
+            "latitude": "여행지 위도",
+            "longitude": "여행지 경도",
         }
 
         widgets = {
@@ -30,13 +34,24 @@ class CreateTravelModelForm(forms.ModelForm):
         }
 
 
-class CreateLodgingModelForm(forms.ModelForm):
+class LodgingModelForm(forms.ModelForm):
     class Meta:
         model = Lodging
-        fields = ("name",)
+        fields = (
+            "name",
+            "latitude",
+            "longitude",
+        )
         labels = {
             "name": "숙소 name",
+            "latitude": "숙소 위도",
+            "longitude": "숙소 경도",
         }
 
-
-CreatePlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)
+PlaceFormset = modelformset_factory(
+    Place, 
+    fields=(
+        "name",
+        "latitude",
+        "longitude",
+    ), extra=1)

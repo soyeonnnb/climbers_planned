@@ -41,7 +41,7 @@ def create_travel(request):
                 ### place fake data ###
                 place.save()
             # kmeans.kmeans_run(travel)
-            aco.aco_run(travel, count_date)
+            aco.aco_run(travel, count_date, shell=False)
             return redirect("travels:checkpath", pk=travel.pk)
     else:
         travelform = forms.CreateTravelModelForm(request.GET or None, prefix="travel")

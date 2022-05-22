@@ -3,8 +3,8 @@ import math
 import random
 
 # 그래프 사진 다운받을 시 pip install matplotlib 해주기
-# from matplotlib import pyplot as plt
-# from matplotlib import font_manager, rc  # 한글폰트 사용
+from matplotlib import pyplot as plt
+from matplotlib import font_manager, rc  # 한글폰트 사용
 
 from . import models as travels_models
 
@@ -206,16 +206,19 @@ class SolveTSPUsingACO:
         dpi=120,
         save=True,
         name=None,
+        color=0,
+        shell=False,
     ):
         font_path = "NanumBarunGothicLight.ttf"
         font = font_manager.FontProperties(fname=font_path).get_name()
         rc("font", family=font)
+        c = ["b", "g", "r", "c", "y", "m", "k", "w"]
         x = [self.nodes[i][0] for i in self.global_best_tour]
         x.append(x[0])
         y = [self.nodes[i][1] for i in self.global_best_tour]
         y.append(y[0])
-        plt.plot(x, y, linewidth=line_width)
-        plt.scatter(x, y, s=math.pi * (point_radius**2.0))
+        plt.plot(x, y, linewidth=line_width, c=c[color % 8])
+        plt.scatter(x, y, s=math.pi * (point_radius**2.0), c=c[color])
         plt.title(self.mode)
         for i in self.global_best_tour:
             plt.annotate(
@@ -228,7 +231,8 @@ class SolveTSPUsingACO:
                 name = "{0}.png".format(self.mode)
             plt.savefig(name, dpi=dpi)
         plt.show()
-        plt.gcf().clear()
+        if shell:
+            plt.gcf().clear()
 
     def get_abs(self, x):
         if x >= 0:
@@ -275,10 +279,8 @@ class SolveTSPUsingACO:
             num += 1
 
 
-def aco_run(travel, count_date):
-    travel_id = travel.id
-    print(travel_id)
-    all_places = travels_models.Place.objects.filter(travel=travel_id)
+def aco_run(travel, count_date, shell=True):
+    all_places = travels_models.Place.objects.filter(travel=travel)
     try:
         lodging = travels_models.Lodging.objects.get(travel=travel)
     except travels_models.Lodging.DoesNotExist:
@@ -314,6 +316,10 @@ def aco_run(travel, count_date):
             lodging=_lodging,
         )
         max_min.run()
-        # 그래프 확인하고 싶으면 주석 빼기
-        # max_min.plot(name=f"{travel.pk}-{i}")
+        if shell:
+            name = f"{travel}-{i}"
+        else:
+            name = f"{travel.pk}"
+            # 그래프 확인하고 싶으면 주석 빼기
+        max_min.plot(name=name, color=i, shell=shell)
         max_min.save_route()

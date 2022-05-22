@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block page_title %}{% endblock page_title %}</title>
+    <link rel="stylesheet" href="{% static 'css/css.css' %}">
+</head>
+
+<body>
+    <div class="nav">
+        <div class="logo">
+            <a href="{% url 'core:core' %}"><img src="https://i.imgur.com/dhqCfSc.png"></a>
+        </div>
+        
+        <div class="nav-item-right">
+            <div class="nav-tiem">
+                <a href="{% url 'core:core' %}">메인화면</a>
+                {% if user.is_authenticated %}
+                <h4>{{request.user}}님 안녕하세요!</h4>
+                <a href="{% url 'users:logout' %}">로그아웃</a>
+                {% else %}
+                <a href="{% url 'users:signup' %}">회원가입</a>
+                <a href="{% url 'users:login' %}">로그인</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=899bda16db224b9417dff6448a51609c&libraries=services"></script>
+    <script type="text/javascript" src="{% static 'js/createtravel.js' %}?after "></script>
+    <script type="text/javascript" src="{% static 'js/formset_button.js' %}?after "></script>
+
+</body>
+
+</html>

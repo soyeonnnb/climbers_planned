@@ -1,36 +1,25 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block page_title %}메인화면{% endblock page_title %}
 {% block content %}
 <div class="title">
     내 여행
 </div>
 
-{% if user.is_authenticated %}
-<a href="{% url 'travels:createtravel' %}">여행지 추가</a>
-
-{% for eachtravel in alltravel %}
-<a href="{% url 'travels:checktravel' eachtravel.id %}">
-    {{eachtravel.name}}
-    {{eachtravel.start_date}}
-    {{eachtravel.end_date}}
-    <br>
-</a>
-{% endfor %}
-{% endif %}
-
-
-<span>여행지추가는 로그인시 보임</span>
-
 <div class="items">
-    <button class="new" onclick="location.href='add.html'">
-        +
+    {% if user.is_authenticated %}
+    <button class="new" onclick="location.href='{% url 'travels:createtravel' %}'"> + </button>
+
+    {% for eachtravel in alltravel %}
+    <button class="plan" onclick="location.href='{% url 'travels:checktravel' eachtravel.id %}'">
+        {{eachtravel.name}}
+        <br>
+        {{eachtravel.start_date}}
+        <br>~<br>
+        {{eachtravel.end_date}}
+        <br>
     </button>
-    <button class="plan" onclick="location.href='add.html'">
-        1
-    </button>
-    <button class="plan" onclick="location.href='add.html'">
-        2
-    </button>
+    {% endfor %}
+    {% endif %}
+
 </div>
 {% endblock %}

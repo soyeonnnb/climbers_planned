@@ -64,6 +64,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = "email"  # Email이 식별자
     REQUIRED_FIELDS = ["nickname"]  # 필수입력값
-    
+
     def __str__(self):
-        return self.name
+        return self.nickname

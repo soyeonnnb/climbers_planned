@@ -2,42 +2,61 @@
 {% load static %}
 {% block page_title %}여행지 추가{% endblock page_title %}
 {% block content %}
-<h1>여행지 추가</h1>
-<!-- <div id="map" style="width:100%;height:350px;"></div> -->
+<div class="title">
+    여행지 추가
+</div>
 
-<form action="" method="post">
-    {%csrf_token%}
-    ----여행
-    {{travelform.as_p}}
-    --------숙소
-    {{lodgingform.as_p}}
-    --------장소
-    {{placeformset.management_form}}
-    <div id="placeformset">
-        {% for form in placeformset %}
-        <p>
-            {{form}}
-            <button type="button" class="placeformset_del_button">❌</button>
-        </p>
-        {% endfor %}
+<div class="table">
+    <div class="map_wrap">
+        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+
+        <div id="menu_wrap" class="bg_white">
+            <div class="option">
+                <div>
+                    <form onsubmit="searchPlaces(); return false;">
+                        키워드 : <input type="text" value="" id="keyword" size="15">
+                        <button type="submit">검색하기</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <ul id="placesList"></ul>
+            <div id="pagination"></div>
+        </div>
     </div>
-    <button type="button" class="placeformset_add_button">➕
-    </button>
+    <form action="" method="post">
+        {%csrf_token%}
+        ----여행
+        {{travelform.as_p}}
 
-    <div>
-        <button>취소</button>
-        <button type='submit'>경로 추천</button>
-    </div>
-</form>
-<br>
-<br>
-<br>
-<br>
-<br><br><br>
+        --------숙소
+        {{lodgingform.as_p}}
+        --------장소
+        {{placeformset.management_form}}
+        <div id="placeformset">
+            {% for form in placeformset %}
+            <p>
+                {{form}}
+                <button type="button" class="placeformset_del_button">❌</button>
+            </p>
+            {% endfor %}
+        </div>
+        <button type="button" class="placeformset_add_button">➕</button>
+        <div>
+            <button>취소</button>
+            <button type='submit'>경로 추천</button>
+        </div>
+
+    </form>
+</div>
 
 
+<div class="container">
+
+</div>
 
 {% endblock %}
+
 {% block javascript %}
 <script type="text/javascript" src="{% static 'js/createtravel.js' %}?after "></script>
 <script type="text/javascript" src="{% static 'js/formset_button.js' %}?after "></script>

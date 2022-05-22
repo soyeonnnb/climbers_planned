@@ -25,13 +25,22 @@ class LoginForm(forms.Form):
         super(LoginForm, self).__init__(*args, **kwargs)
 
         self.fields["email"].widget.attrs = {
-            "class": "form-control ",
+            "class": "form-control",
             "id": "numberInput",
             "type": "text",
-            "placeholder": "아이디",
+            "placeholder": "이메일",
             "name": "userID",
             "maxlength": "20",
         }
+        self.fields["password"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호",
+            "name": "userPassword",
+            "maxlength": "20",
+        }
+
 
 
 class SignUpForm(forms.ModelForm):
@@ -79,6 +88,22 @@ class SignUpForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
 
+        self.fields["email"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "text",
+            "placeholder": "이메일",
+            "name": "userID",
+            "maxlength": "20",
+        }
+        self.fields["password"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호",
+            "name": "userPassword",
+            "maxlength": "20",
+        }
         self.fields["name"].widget.attrs = {
             "class": "form-control",
             "id": "numberInput",
@@ -91,15 +116,7 @@ class SignUpForm(forms.ModelForm):
             "class": "form-control",
             "id": "numberInput",
             "type": "text",
-            "placeholder": "아이디",
-            "name": "userID",
-            "maxlength": "20",
-        }
-        self.fields["email"].widget.attrs = {
-            "class": "form-control",
-            "id": "numberInput",
-            "type": "text",
-            "placeholder": "아이디",
-            "name": "userID",
+            "placeholder": "닉네임",
+            "name": "userNickname",
             "maxlength": "20",
         }

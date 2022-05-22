@@ -83,7 +83,6 @@ def checktravel(request, pk):
     # places = sorted(places, key=models.Place.day)
     return render(request, 'travels/checktravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
 
-
 def updatetravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)
@@ -147,3 +146,4 @@ def updatetravel(request, pk):
 #         # places.save()
 #         return redirect('travels:checktravel', pk=travel.pk)
 #     return render(request, 'travels/updatetravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
+    

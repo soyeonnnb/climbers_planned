@@ -2,9 +2,7 @@
 {% block page_title %}회원가입{% endblock page_title %}
 {% block content %}
 <div class="main">
-	<div class="title">
-		<h1>회원가입 페이지</h1>
-	</div>
+	
 
 	<div class="container">
 		<div class="col-lg-4"></div>
@@ -12,20 +10,19 @@
 			<div class="jumbotron" style="padding-top: 20px;">
 				<form action="{% url 'users:signup' %}" method="POST">
 					{% csrf_token %}
-					{{form.as_p}}
+					
 					<h3 style="text-align: center;">회원가입</h3>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="userID" maxlength="20">
+						{{form.email}}
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="userPassword"
-							maxlength="20">
+						{{form.password}}
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="이름" name="userName" maxlength="20">
+						{{form.name}}
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="닉네임" name="userNickname" maxlength="50">
+						{{form.nickname}}
 					</div>
 
 					<input type="submit" class="btn btn-primary form-control" value="회원가입">
@@ -35,4 +32,3 @@
 		<div class="col-lg-4"></div>
 	</div>
 </div>
-{% endblock %}

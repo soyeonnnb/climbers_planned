@@ -162,3 +162,6 @@ cython_debug/
 
 # plt 글꼴
 NanumBarunGothicLight.ttf
+
+# aco 사진
+*.png

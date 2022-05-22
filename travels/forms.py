@@ -2,6 +2,7 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
+
 class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
@@ -20,6 +21,16 @@ class TravelModelForm(forms.ModelForm):
             "color": "여행지 color",
             "latitude": "여행지 위도",
             "longitude": "여행지 경도",
+        }
+
+        widgets = {
+            "start_date": forms.DateInput(
+                attrs={"class": "form-control", "rows": 4, "type": "date"}
+            ),
+            "end_date": forms.DateInput(
+                attrs={"class": "form-control", "rows": 4, "type": "date"}
+            ),
+            "color": forms.TextInput(attrs={"type": "color"}),
         }
 
 

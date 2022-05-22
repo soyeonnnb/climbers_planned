@@ -1,7 +1,9 @@
 {% extends 'base.html' %} 
 {% block page_title %}경로 확인{% endblock page_title %}
 {% block content %}
-<h1>경로 확인</h1>
+<div class="title">
+    경로 확인
+</div>
 {% csrf_token %}
 
 {% for place in places %}
@@ -15,4 +17,3 @@
 <a href="{% url 'travels:savepath' %}">
     <button type='submit'>경로 저장</button>
 </a>
-{% endblock %}

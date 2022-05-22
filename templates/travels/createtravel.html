@@ -9,23 +9,26 @@
     <link rel="stylesheet" href="{% static 'css/add_place.css' %}">
 </head>
 
-    <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+<div class="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
-        <div id="menu_wrap" class="bg_white">
-            <div class="option">
-                <div>
-                    <form onsubmit="searchPlaces(); return false;">
-                        키워드 : <input type="text" value="" id="keyword" size="15">
-                        <button type="submit">검색하기</button>
-                    </form>
-                </div>
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="" id="keyword" size="15">
+                    <button type="submit">검색하기</button>
+                </form>
             </div>
-            <hr>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
         </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
     </div>
+</div>
+
+<button type="button" class="placeformset_place_button">김버튼</button>
+
 <div id ="addplace_latlng" >
     <span></span>
 </div>
@@ -47,12 +50,11 @@
     <div id="placeformset">
         {% for form in placeformset %}
         <p>
-            {{form}}
             <button type="button" class="placeformset_del_button">❌</button>
         </p>
         {% endfor %}
     </div>
-    <button type="button" class="placeformset_add_button">➕</button>
+    <!-- <button type="button" class="placeformset_add_button">➕</button> -->
 
     <div>
         <button>취소</button>

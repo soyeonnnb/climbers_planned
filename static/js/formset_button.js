@@ -1,7 +1,7 @@
 const placeFormset = document.querySelector("#placeformset");
-const add_button = document.querySelector(".placeformset_add_button");
+// const add_button = document.querySelector(".placeformset_add_button");
 const del_button = document.querySelector(".placeformset_del_button");
-const add_place_button = document.querySelector(".placeformset_add_place_button");
+const place_button = document.querySelector(".placeformset_place_button");
 const inputTotalForm = document.querySelector("#id_places-TOTAL_FORMS");
 let placeFormsetNumber = 1;
 
@@ -27,18 +27,15 @@ function makeFormsetP(number){
     button.addEventListener("click", formsetDel);
     p.appendChild(label);
     p.appendChild(input);
-    p.appendChild(inputHidden);
+    //p.appendChild(inputHidden);
     p.appendChild(button);
     return p;
 }
 
-// + 버튼 클릭시 폼 생성
-function formsetAdd(){
-    const p = makeFormsetP(placeFormsetNumber);
-    placeFormsetNumber ++ ;
-    inputTotalForm.value = placeFormsetNumber;
-    placeFormset.appendChild(p);
-}
+// // + 버튼 클릭시 폼 생성
+// function formsetAdd(){
+
+// }
 
 // x 버튼 클릭시 폼 삭제
 function formsetDel(event){
@@ -46,14 +43,14 @@ function formsetDel(event){
     p.remove();
 }
 
-function formsetAddPlace(){
+function formsetPlace(){
     const p = makeFormsetP(placeFormsetNumber);
     placeFormsetNumber ++ ;
     inputTotalForm.value = placeFormsetNumber;
     placeFormset.appendChild(p);
 }
 
-add_button.addEventListener("click", formsetAdd);
+//add_button.addEventListener("click", formsetAdd);
 del_button.addEventListener("click", formsetDel);
-add_place_button.addEventListener("click", formsetAddPlace);
+place_button.addEventListener("click", formsetPlace);
 

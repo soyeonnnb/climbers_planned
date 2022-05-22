@@ -94,3 +94,7 @@ def checktravel(request, pk):
         "travels/checktravel.html",
         {"travel": travel, "lodging": lodging, "places": places},
     )
+
+
+def addplace(request):
+    return render(request, "travels/addplace.html")

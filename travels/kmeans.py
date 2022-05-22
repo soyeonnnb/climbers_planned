@@ -1,5 +1,6 @@
 import pandas as pd
 
+# 모두 import 해야 하는데 우선 막아놓음
 # import numpy as np
 # import matplotlib.pyplot as plt
 # from sklearn.cluster import KMeans  # K-Means
@@ -15,4 +16,3 @@ def kmeans_run(travel):
         "name", "latitude", "longitude"
     )
     df_allplace = pd.DataFrame(list(all_places))
-    print(f"kmeans {df_allplace}")

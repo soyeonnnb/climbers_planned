@@ -12,6 +12,10 @@
 
 <body>
     <div class="nav">
+        <div class="logo">
+            <a href="{% url 'core:core' %}"><img src="https://i.imgur.com/dhqCfSc.png"></a>
+        </div>
+        
         <div class="nav-item-right">
             <div class="nav-tiem">
                 <a href="{% url 'core:core' %}">메인화면</a>
@@ -29,11 +33,12 @@
         {% block content %}
         {% endblock %}
     </div>
-
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=899bda16db224b9417dff6448a51609c&libraries=services"></script>
+    <script type="text/javascript" src="{% static 'js/createtravel.js' %}?after "></script>
+    <script type="text/javascript" src="{% static 'js/formset_button.js' %}?after "></script>
 
     {% block javascript %}
     {% endblock javascript %}
-
 </body>
 
-</html>

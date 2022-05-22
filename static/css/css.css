@@ -1,15 +1,15 @@
 /*
 @import url(media.css);
 @import url(style.css);
-@import url(bootstrap.css);
 */
 @import url(add_place.css);
 @import url(bootstrap-theme.css);
+@import url(bootstrap.css);
 @import url(bootstrap-theme.min.css);
 @import url(bootstrap.min.css);
 .nav{
-    height: 70px;
-    background-color: rgba(189, 231, 247, 0.966);
+    height: 50px;
+    background-color:#2E9AFE;
     display:flex;
     align-items:center;
   }
@@ -20,6 +20,10 @@
     display:flex;
     margin-left:auto;
   }
+.logo{
+    
+    margin-left : 250px;
+}
 
 .main{
           width:1000px;
@@ -32,17 +36,19 @@
     font-weight:bold;
 }
 .items{
-    display: flexbox;
+    display: flex;
+    display: inline-flex;
     width: 1000px;
     margin : 10px;
     margin-top : 60px;
     margin-left: right;
+    align-items: flex-start;
 }
 .new{
-    width:100px;
-    height: 150px;
-    margin: 1px;
-    font-size:3rem;
+    width:135px;
+    height: 190px;
+    margin: 10px;
+    font-size:9rem;
     font-weight: bold;
     color:white;
     background-color:rgb(128, 128, 128);
@@ -50,10 +56,10 @@
     border-radius:15px;
 }
 .plan{
-    width:100px;
-    height: 150px;
+    width:135px;
+    height: 190px;
     margin: 10px;
-    font-size: 3rem;
+    font-size: 1.5rem;
     font-weight: bold;
     color:black;
     border-color : white;
@@ -77,4 +83,10 @@
     background-color:rgb(104, 135, 238);
     border-color : white;
     border-radius:15px;
+}
+.input { 
+    float : left;
+    width : 90px;
+    text-align : right;
+    padding : 10px;
 }

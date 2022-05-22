@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block page_title %}여행지 확인{% endblock page_title %}
 {% block content %}
-<h1>여행지 확인</h1>
-
-{{travel.name}}<br>
-{{lodging.name}}<br>
-{{travel.start_date}} {{travel.end_date}}<br>
-
-{% for place in places %}
-<h3>{{place.day}}일차</h3><br>
-{{place.name}}<br>
-{% endfor %}
-
-
-{% endblock %}
+<div class="title">
+    여행지 확인
+</div>
+<div class="container">
+    
+    여행이름 : {{travel.name}}<br>
+    숙소 : {{lodging.name}}<br>
+    여행기간 : {{travel.start_date}} ~ {{travel.end_date}}<br>
+    
+    {% for place in places %}
+        <h3>{{place.day}}일차</h3><br>
+        {{place.name}}<br>
+    {% endfor %}
+    
+    
+    {% endblock %}
+</div>

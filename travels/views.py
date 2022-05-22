@@ -9,7 +9,6 @@ from . import kmeans
 def create_travel(request):
     user = request.user
     if request.method == "POST":
-
         travelform = forms.CreateTravelModelForm(request.POST, prefix="travel")
         lodgingform = forms.CreateLodgingModelForm(request.POST, prefix="lodging")
         placeformset = forms.CreatePlaceFormset(request.POST, prefix="places")

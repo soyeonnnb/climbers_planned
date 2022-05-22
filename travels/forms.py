@@ -36,7 +36,19 @@ class CreateLodgingModelForm(forms.ModelForm):
         fields = ("name",)
         labels = {
             "name": "숙소 name",
+            "latitude": "숙소 latitude",
+            "longitude": "숙소 longitude",
+        }
+        widgets = {
+            "latitude": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "rows": 4,
+                }
+            ),
         }
 
 
-CreatePlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)
+CreatePlaceFormset = modelformset_factory(
+    Place, fields=("name", "latitude", "longitude"), extra=1
+)

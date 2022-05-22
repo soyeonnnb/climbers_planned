@@ -37,6 +37,7 @@ function formsetAdd(){
     placeFormsetNumber ++ ;
     inputTotalForm.value = placeFormsetNumber;
     placeFormset.appendChild(p);
+    newPage=window.open("http://127.0.0.1:8000/travels/addplace/");
 }
 
 // x 버튼 클릭시 폼 삭제

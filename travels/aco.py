@@ -208,6 +208,7 @@ class SolveTSPUsingACO:
         name=None,
         color=0,
         shell=False,
+        title="",
     ):
         font_path = "NanumBarunGothicLight.ttf"
         font = font_manager.FontProperties(fname=font_path).get_name()
@@ -219,7 +220,7 @@ class SolveTSPUsingACO:
         y.append(y[0])
         plt.plot(x, y, linewidth=line_width, c=c[color % 8])
         plt.scatter(x, y, s=math.pi * (point_radius**2.0), c=c[color])
-        plt.title(self.mode)
+        plt.title(title)
         for i in self.global_best_tour:
             plt.annotate(
                 self.labels[i],
@@ -318,8 +319,10 @@ def aco_run(travel, count_date, shell=True):
         max_min.run()
         if shell:
             name = f"{travel}-{i}"
+            title = f"{i}일차"
         else:
             name = f"{travel.pk}"
+            title = f'"{travel.name}"'
             # 그래프 확인하고 싶으면 주석 빼기
-        max_min.plot(name=name, color=i, shell=shell)
+        max_min.plot(name=name, color=i, shell=shell, title=title)
         max_min.save_route()

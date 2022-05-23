@@ -39,8 +39,6 @@ def create_travel(request):
                 place.order = 0  # order이 null이 되면 안되서 0으로 채워줌
                 ### place fake data ###
                 place.day = random.randint(1, count_date)
-                place.latitude = random.uniform(0, 5)
-                place.longitude = random.uniform(0, 5)
                 ### place fake data ###
                 place.save()
             # kmeans.kmeans_run(travel)

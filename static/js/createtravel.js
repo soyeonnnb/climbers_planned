@@ -1,3 +1,7 @@
+var clickResultName = document.getElementById("click-result__name");
+var clickResultLat = document.getElementById("click-result__lat");
+var clickResultLng = document.getElementById("click-result__lng");
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
     center: new kakao.maps.LatLng(37.5973165519067, 127.058726610686),
@@ -49,17 +53,27 @@ var ps = new kakao.maps.services.Places();
 // });   
 
 
+
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
 searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
     if (status === kakao.maps.services.Status.OK) {
         // var detailAddr = !!result[0].road_address ? '<div>도로명주소 : ' + result[0].road_address.address_name + '</div>' : '';
+        
         var detailAddr = '<div>지번 주소 : ' + result[0].address.address_name + '</div>';
 
         var content = '<div class="bAddr">' +
                         '<span class="title">법정동 주소정보</span>' + 
                         detailAddr +
                     '</div>';
+
+        
+        // var hw = document.getElementById('hw');
+        // hw.addEventListener('click', function(){
+        // alert('Hello world');
+        // })
+
+        document.getElementById('addplace_latlng').innerHTML = mouseEvent.latLng;
 
         // 마커를 클릭한 위치에 표시합니다 
         marker.setPosition(mouseEvent.latLng);
@@ -136,12 +150,12 @@ function displayPlaces(places) {
     var listEl = document.getElementById('placesList');
     var menuEl = document.getElementById('menu_wrap');
     var fragment = document.createDocumentFragment();
-    var place = function(x, y, address_name){
-        this.x = x;
-        this.y = y;
-        this.address_name = address_name;
-    }
-    var coorArr = new Array();
+    // var place = function(x, y, address_name){
+    //     this.x = x;
+    //     this.y = y;
+    //     this.address_name = address_name;
+    // }
+    // var coorArr = new Array();
     //var bounds = new kakao.maps.LatLngBounds();
     
     // 검색 결과 목록에 추가된 항목들을 제거합니다
@@ -178,7 +192,7 @@ function displayPlaces(places) {
             });
 
             itemEl.onmouseover =  function () {
-                displayInfowindow(marker, title);
+                map.setCenter(new kakao.maps.LatLng(y, x));
             };
 
             itemEl.onmouseout =  function () {
@@ -187,6 +201,7 @@ function displayPlaces(places) {
 
             itemEl.onclick = function (){
                 //alert(address);
+                map.setCenter(new kakao.maps.LatLng(y, x));
             }
         })(marker, places[i].address_name, places[i].place_name, places[i].x, places[i].y);
 
@@ -300,13 +315,6 @@ function removeAllChildNods(el) {
         el.removeChild (el.lastChild);
     }
 }
-
-
-
-
-
-
-
 
 // //지도 클릭 관련 함수(여행지)
 // function finishInputplaces() {

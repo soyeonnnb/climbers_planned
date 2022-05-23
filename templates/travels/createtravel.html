@@ -7,6 +7,23 @@
 
 <head>
     <link rel="stylesheet" href="{% static 'css/add_place.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js" ></script>
+    <title>Document</title>
+
+    <!-- <script id="address">
+        $.ajax({
+            url: 'https://dapi.kakao.com/v2/local/search/keyword.json?query=' + encodeURIComponent(address),
+            headers: { 'Authorization': 'KakaoAK b2da839ebc1af58bd44041ba6574ec9e'}, 
+            type: 'GET'
+        }).done(function(data) {
+            console.log(data.documents[0].place_name);
+            console.log(data.documents[0].address_name);
+            console.log(data.documents[0].y);
+            console.log(data.documents[0].x);
+        });
+    </script> -->
 </head>
 
 <div class="map_wrap">

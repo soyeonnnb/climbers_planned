@@ -339,8 +339,8 @@ geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 
 //마커 클릭시 refresh
 function refreshDetailsByMarker(title, address, y, x){
-    document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = address;
-    document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = title;
+    document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = title;
+    document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = address;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[2].innerHTML = y;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[3].innerHTML = x;
 }
@@ -357,9 +357,9 @@ function refreshDetailsByMap(addr){
             document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = '이름 없음';
         }
         else{
-            document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = data.documents[0].address_name;
+            document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = data.documents[0].place_name;
         }
-        document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = data.documents[0].place_name;
+        document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = data.documents[0].address_name;
         document.getElementsByTagName('cl')[0].getElementsByTagName('span')[2].innerHTML = data.documents[0].y;
         document.getElementsByTagName('cl')[0].getElementsByTagName('span')[3].innerHTML = data.documents[0].x;
     });

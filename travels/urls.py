@@ -10,5 +10,5 @@ urlpatterns = [
     path('addplace/', addplace, name='addplace'),
     path("checktravel/<int:pk>/", checktravel, name='checktravel'),
     path("updatetravel/<int:pk>/", updatetravel, name='updatetravel'),
-
+    path("deletetravel/<int:pk>/", deletetravel, name="deletetravel"),
 ]

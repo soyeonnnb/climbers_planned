@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
-{% load static %}
 {% block page_title %}경로 확인{% endblock page_title %}
 {% block content %}
-<h1>경로 확인</h1>
+<div class="title">
+    경로 확인
+</div>
 {% csrf_token %}
 
 {% for place in places %}

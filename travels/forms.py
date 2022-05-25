@@ -3,7 +3,7 @@ from django.forms import modelformset_factory
 from .models import Travel, Place, Lodging
 
 
-class CreateTravelModelForm(forms.ModelForm):
+class TravelModelForm(forms.ModelForm):
     class Meta:
         model = Travel
         fields = (
@@ -30,13 +30,42 @@ class CreateTravelModelForm(forms.ModelForm):
         }
 
 
-class CreateLodgingModelForm(forms.ModelForm):
+class LodgingModelForm(forms.ModelForm):
     class Meta:
         model = Lodging
-        fields = ("name",)
+        fields = (
+            "name",
+            "latitude",
+            "longitude",
+        )
         labels = {
             "name": "숙소 name",
         }
 
+        # widgets = {
+        #    "latitude": forms.HiddenInput(
+        #        attrs={
+        #            "type": "hidden",
+        #        }
+        #    ),
+        #    "longitude": forms.HiddenInput(
+        #        attrs={
+        #            "type": "hidden",
+        #        }
+        #    ),
+        # }
 
-CreatePlaceFormset = modelformset_factory(Place, fields=("name",), extra=1)
+
+PlaceFormset = modelformset_factory(
+    Place,
+    fields=(
+        "name",
+        "latitude",
+        "longitude",
+    ),
+    extra=0,
+    widgets={
+        "latitude": forms.HiddenInput(attrs={"type": "hidden"}),
+        "longitude": forms.HiddenInput(attrs={"type": "hidden"}),
+    },
+)

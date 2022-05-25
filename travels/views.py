@@ -4,15 +4,18 @@ from . import forms
 from . import models
 from . import aco
 from . import kmeans
+from django.template import RequestContext
+
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def create_travel(request):
     user = request.user
     if request.method == "POST":
-
-        travelform = forms.CreateTravelModelForm(request.POST, prefix="travel")
-        lodgingform = forms.CreateLodgingModelForm(request.POST, prefix="lodging")
-        placeformset = forms.CreatePlaceFormset(request.POST, prefix="places")
+        travelform = forms.TravelModelForm(request.POST, prefix="travel")
+        lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
+        placeformset = forms.PlaceFormset(request.POST, prefix="places")
         if travelform.is_valid() and lodgingform.is_valid() and placeformset.is_valid():
             travel = travelform.save(commit=False)
             travel.user = user
@@ -23,8 +26,8 @@ def create_travel(request):
             lodging = lodgingform.save(commit=False)
             lodging.travel = travel
             ### lodging fake data###
-            lodging.latitude = random.uniform(0, 5)
-            lodging.longitude = random.uniform(0, 5)
+            # lodging.latitude = random.uniform(0, 5)
+            # lodging.longitude = random.uniform(0, 5)
             lodging.save()
             ### lodging fake data###
             for form in placeformset:
@@ -36,19 +39,15 @@ def create_travel(request):
                 place.order = 0  # order이 null이 되면 안되서 0으로 채워줌
                 ### place fake data ###
                 place.day = random.randint(1, count_date)
-                place.latitude = random.uniform(0, 5)
-                place.longitude = random.uniform(0, 5)
                 ### place fake data ###
                 place.save()
-            # kmeans.kmeans_run(travel)
+            kmeans.kmeans_run(travel, count_date)
             aco.aco_run(travel, count_date, shell=False)
             return redirect("travels:checkpath", pk=travel.pk)
     else:
-        travelform = forms.CreateTravelModelForm(request.GET or None, prefix="travel")
-        lodgingform = forms.CreateLodgingModelForm(
-            request.GET or None, prefix="lodging"
-        )
-        placeformset = forms.CreatePlaceFormset(
+        travelform = forms.TravelModelForm(request.GET or None, prefix="travel")
+        lodgingform = forms.LodgingModelForm(request.GET or None, prefix="lodging")
+        placeformset = forms.PlaceFormset(
             queryset=models.Place.objects.none(), prefix="places"
         )
     return render(
@@ -62,6 +61,7 @@ def create_travel(request):
     )
 
 
+@login_required
 def checkpath(request, pk):
     travel = models.Travel.objects.get(pk=pk)
     places = []
@@ -73,6 +73,7 @@ def checkpath(request, pk):
     )
 
 
+@login_required
 def savepath(request):  # 경로 저장
     # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨주므로 db에 저장할 필요 없는 것 같은데.. 맞나요?
     # 시퀀스 다이어그램 상 다시 저장해주어야 하긴 하는데.. 갱신 아닌지.. 근데 갱신할 필요가 없는 것 같아서요
@@ -82,6 +83,7 @@ def savepath(request):  # 경로 저장
     return redirect("core")
 
 
+@login_required
 def checktravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)
@@ -94,3 +96,78 @@ def checktravel(request, pk):
         "travels/checktravel.html",
         {"travel": travel, "lodging": lodging, "places": places},
     )
+@login_required
+def addplace(request):
+    return render(request, "travels/addplace.html")
+
+
+@login_required
+def updatetravel(request, pk):
+    travel = get_object_or_404(models.Travel, pk=pk)
+    lodging = models.Lodging.objects.get(travel=pk)
+    places = []
+    for p in models.Place.objects.filter(travel=pk):
+        places.append(p)
+    if request.method == "POST":
+        travelform = forms.TravelModelForm(request.POST, prefix="travel")
+        lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
+        placeformset = forms.PlaceFormset(request.POST, prefix="places")
+        if not travel:
+            return redirect("core")
+        if travelform.is_valid() and lodgingform.is_valid() and placeformset.is_valid():
+            travel_name = travelform.cleaned_data["travel_name"]
+            travel_start_date = travelform.cleaned_data["travel_start_date"]
+            travel_end_date = travelform.cleaned_data["travel_end_date"]
+            lodging_name = lodgingform.cleaned_data["lodging_name"]
+
+            travel.name = travel_name
+            travel.start_date = travel_start_date
+            travel.end_date = travel_end_date
+            lodging.name = lodging_name
+
+            for place in places:
+                place_name = placeformset.cleaned_data["place_name"]
+                place.name = place_name
+
+            travel.save()
+            lodging.save()
+            places.save()
+        return redirect("travels:checktravel", kwargs={"pk": pk})
+
+    else:
+        travelform = forms.TravelModelForm(instance=travel)
+        lodgingform = forms.LodgingModelForm(instance=lodging)
+        placeformset = forms.PlaceFormset(queryset=models.Place.objects.all())
+    print(placeformset)
+    return render(
+        request,
+        "travels/updatetravel.html",
+        {
+            "travelform": travelform,
+            "lodgingform": lodgingform,
+            "placeformset": placeformset,
+        },
+        context_instance=RequestContext(request),
+    )
+
+
+# @login_required
+# def updatetravel(request, pk):
+#     travel = get_object_or_404(models.Travel, pk=pk)
+#     lodging = models.Lodging.objects.get(travel=pk)
+#     places = []
+#     for p in models.Place.objects.filter(travel=pk):
+#         places.append(p)
+#     if request.method == "POST": #update
+#         travel.name = request.POST.get("name", False)
+#         lodging.name = request.POST.get("name", False)
+#         travel.start_date = request.POST.get("start_date", False)
+#         travel.end_date = request.POST.get("end_date", False)
+#         for place in places:
+#             place.name = request.POST.get("name", False)
+#         # travel.save()
+#         # lodging.save()
+#         # places.save()
+#         return redirect('travels:checktravel', pk=travel.pk)
+#     return render(request, 'travels/updatetravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
+

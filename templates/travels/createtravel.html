@@ -3,28 +3,6 @@
 {% block page_title %}여행지 추가{% endblock page_title %}
 {% block content %}
 <h1>여행지 추가</h1>
-<!-- <div id="map" style="width:100%;height:350px;"></div> -->
-
-<head>
-    <link rel="stylesheet" href="{% static 'css/add_place.css' %}">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.min.js" ></script>
-    <title>Document</title>
-
-    <!-- <script id="address">
-        $.ajax({
-            url: 'https://dapi.kakao.com/v2/local/search/keyword.json?query=' + encodeURIComponent(address),
-            headers: { 'Authorization': 'KakaoAK b2da839ebc1af58bd44041ba6574ec9e'}, 
-            type: 'GET'
-        }).done(function(data) {
-            console.log(data.documents[0].place_name);
-            console.log(data.documents[0].address_name);
-            console.log(data.documents[0].y);
-            console.log(data.documents[0].x);
-        });
-    </script> -->
-</head>
 
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -44,20 +22,14 @@
     </div>
 </div>
 
-<button type="button" class="placeformset_place_button">김버튼</button>
-
-<!-- <div id ="addplace_latlng" >
-    <span></span>
-</div> -->
-
 <cl id="click-result">
-    <span id="click-result__name">이름</span>
-    <span id="click-result__address">주소</span>
-    <span id="click-result__lat">lat</span>
-    <span id="click-result__lng">lng</span>
+    <span id="click-result__name"></span>
+    <span id="click-result__address" style="display:none;"></span>
+    <span id="click-result__lat" style="display:none;"></span>
+    <span id="click-result__lng" style="display:none;"></span>
 </cl>
+<button type="button" class="placeformset_add_button">여행지 추가</button>
 
-<!-- <input type="button" id="hw" value="Hello world" /> -->
 
 <form action="" method="post">
     <br>

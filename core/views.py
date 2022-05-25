@@ -5,6 +5,6 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def main(request):
-    alltravel = models.Travel.objects.all()
+    user = request.user
+    alltravel = models.Travel.objects.filter(user=user)
     return render(request, "core.html", {"alltravel": alltravel})
-

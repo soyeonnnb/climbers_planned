@@ -26,8 +26,8 @@ def create_travel(request):
             lodging = lodgingform.save(commit=False)
             lodging.travel = travel
             ### lodging fake data###
-            lodging.latitude = random.uniform(0, 5)
-            lodging.longitude = random.uniform(0, 5)
+            # lodging.latitude = random.uniform(0, 5)
+            # lodging.longitude = random.uniform(0, 5)
             lodging.save()
             ### lodging fake data###
             for form in placeformset:
@@ -41,7 +41,7 @@ def create_travel(request):
                 place.day = random.randint(1, count_date)
                 ### place fake data ###
                 place.save()
-            # kmeans.kmeans_run(travel)
+            kmeans.kmeans_run(travel, count_date)
             aco.aco_run(travel, count_date, shell=False)
             return redirect("travels:checkpath", pk=travel.pk)
     else:

@@ -41,9 +41,18 @@ class LodgingModelForm(forms.ModelForm):
         labels = {
             "name": "숙소 name",
         }
+
         # widgets = {
-        #     "latitude": forms.HiddenInput(attrs={"type": "hidden"}),
-        #     "longitude": forms.HiddenInput(attrs={"type": "hidden"}),
+        #    "latitude": forms.HiddenInput(
+        #        attrs={
+        #            "type": "hidden",
+        #        }
+        #    ),
+        #    "longitude": forms.HiddenInput(
+        #        attrs={
+        #            "type": "hidden",
+        #        }
+        #    ),
         # }
 
 
@@ -54,7 +63,7 @@ PlaceFormset = modelformset_factory(
         "latitude",
         "longitude",
     ),
-    extra=1,
+    extra=0,
     widgets={
         "latitude": forms.HiddenInput(attrs={"type": "hidden"}),
         "longitude": forms.HiddenInput(attrs={"type": "hidden"}),

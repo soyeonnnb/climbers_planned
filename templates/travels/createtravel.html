@@ -3,7 +3,6 @@
 {% block page_title %}여행지 추가{% endblock page_title %}
 {% block content %}
 <h1>여행지 추가</h1>
-<!-- <div id="map" style="width:100%;height:350px;"></div> -->
 
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -23,18 +22,14 @@
     </div>
 </div>
 
-<button type="button" class="placeformset_place_button">김버튼</button>
+<cl id="click-result">
+    <span id="click-result__name"></span>
+    <span id="click-result__address" style="display:none;"></span>
+    <span id="click-result__lat" style="display:none;"></span>
+    <span id="click-result__lng" style="display:none;"></span>
+</cl>
+<button type="button" class="placeformset_add_button">여행지 추가</button>
 
-<div id="addplace_latlng">
-    <span></span>
-</div>
-<div id="click-result" style="display:none;">
-    <span id="click-result__name">이름</span>
-    <span id="click-result__address">주소</span>
-    <span id="click-result__lat">11</span>
-    <span id="click-result__lng">22</span>
-</div>
-<!-- <input type="button" id="hw" value="Hello world" /> -->
 
 <form action="" method="post">
     <br>
@@ -46,17 +41,16 @@
     {{travelform.as_p}}
     --------숙소
     {{lodgingform.as_p}}
-    --------장소 목록
+    --------장소
     {{placeformset.management_form}}
     <div id="placeformset">
         {% for form in placeformset %}
         <p>
-            {{form}}
             <button type="button" class="placeformset_del_button">❌</button>
         </p>
         {% endfor %}
     </div>
-    <button type="button" class="placeformset_add_button">➕</button>
+    <!-- <button type="button" class="placeformset_add_button">➕</button> -->
 
     <div>
         <button>취소</button>

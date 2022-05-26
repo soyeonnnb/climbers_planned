@@ -7,6 +7,5 @@ urlpatterns = [
     path("<int:pk>/", checkpath, name="checkpath"),
     path("createtravel/", create_travel, name="createtravel"),
     path("savepath/", savepath, name="savepath"),
-    path("checktravel/<int:pk>/", checktravel, name="checktravel"),
-    path("updatetravel/<int:pk>/", updatetravel, name="updatetravel"),
+    path("mytravel/<int:pk>/", checktravel, name='checktravel'),
 ]

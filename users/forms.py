@@ -42,7 +42,6 @@ class LoginForm(forms.Form):
         }
 
 
-
 class SignUpForm(forms.ModelForm):
     class Meta:
         model = models.User
@@ -102,6 +101,14 @@ class SignUpForm(forms.ModelForm):
             "type": "password",
             "placeholder": "비밀번호",
             "name": "userPassword",
+            "maxlength": "20",
+        }
+        self.fields["password1"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호 확인",
+            "name": "userPassword1",
             "maxlength": "20",
         }
         self.fields["name"].widget.attrs = {

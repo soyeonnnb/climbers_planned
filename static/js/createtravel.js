@@ -61,8 +61,6 @@ searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
                         detailAddr +
                     '</div>';
 
-        refreshDetailsByMap(result[0].address.address_name);
-
         // 마커를 클릭한 위치에 표시합니다 
         marker.setPosition(mouseEvent.latLng);
         marker.setMap(map);
@@ -181,7 +179,7 @@ function displayPlaces(places) {
 
             kakao.maps.event.addListener(marker, 'click', function() {
                 infowindow.close();
-                refreshDetailsByMarker(title, address, y, x);
+                refreshDetails(title, address, y, x);
             });
 
             itemEl.onmouseover =  function () {
@@ -337,30 +335,9 @@ function searchDetailAddrFromCoords(coords, callback) {
 geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
 
-//마커 클릭시 refresh
-function refreshDetailsByMarker(title, address, y, x){
+function refreshDetails(title, address, y, x){
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = title;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = address;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[2].innerHTML = y;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[3].innerHTML = x;
-}
-
-//지도 클릭시 refresh
-function refreshDetailsByMap(addr){
-    $.ajax({
-        url: 'https://dapi.kakao.com/v2/local/search/keyword.json?query=' + encodeURIComponent(addr),
-        headers: { 'Authorization': 'KakaoAK b2da839ebc1af58bd44041ba6574ec9e'}, 
-        type: 'GET'
-    }).done(function(data) {
-        //place_name이 없는 경우(도로, 산 등) data.documents[0]는 undefined로 return
-        if(typeof data.documents[0] == 'undefined'){
-            document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = '이름 없음';
-        }
-        else{
-            document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = data.documents[0].place_name;
-        }
-        document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = data.documents[0].address_name;
-        document.getElementsByTagName('cl')[0].getElementsByTagName('span')[2].innerHTML = data.documents[0].y;
-        document.getElementsByTagName('cl')[0].getElementsByTagName('span')[3].innerHTML = data.documents[0].x;
-    });
 }

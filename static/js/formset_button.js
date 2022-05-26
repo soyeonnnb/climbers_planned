@@ -56,7 +56,6 @@ function cleanResult(){
     document.getElementById("click-result__lat").innerText = "";
     document.getElementById("click-result__lng").innerText ="";
 }
-
 // + 버튼 클릭시 폼 생성
 function formsetAdd(){
     var formAddName = document.getElementById("click-result__name").innerText;

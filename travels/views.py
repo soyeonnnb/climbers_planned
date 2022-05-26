@@ -88,7 +88,6 @@ def checktravel(request, pk):
         chk_day[i.day-1].append(i) 
     for i in range(len(chk_day)):
         chk_day[i].insert(0, i+1)
-    print(chk_day)
     
     # places = sorted(places, key=models.Place.day)
     return render(

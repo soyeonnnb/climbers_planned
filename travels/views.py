@@ -66,8 +66,15 @@ def checkpath(request, pk):
     for p in models.Place.objects.filter(travel=pk).order_by("order"):
         places.append(p)
     # places = sorted(places, key=models.Place.day)
+    count_date = (travel.end_date - travel.start_date).days + 1    
+    chk_day = [[] for _ in range(count_date)]
+    for i in places:
+        chk_day[i.day-1].append(i) 
+    for i in range(len(chk_day)):
+        chk_day[i].insert(0, i+1)
+    print(chk_day)
     return render(
-        request, "travels/checkpath.html", {"travel": travel, "places": places}
+        request, "travels/checkpath.html", {"travel": travel, "places": places, "chk_day":chk_day}
     )
 
 

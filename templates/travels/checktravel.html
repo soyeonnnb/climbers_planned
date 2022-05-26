@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block page_title %}여행지 확인{% endblock page_title %}
+{% block content %}
+<div class="title">
+    여행지 확인
+</div>
+<div class="container">
+
+    여행이름 : {{travel.name}}<br>
+    숙소 : {{lodging.name}}<br>
+    여행기간 : {{travel.start_date}} ~ {{travel.end_date}}<br>
+
+    {% for place in chk_day %}
+        <h3>{{place.0}}일차</h3><br>
+        {% for p in places %}
+            {% if p.day == place.0 %}
+                <h4>{{p.name}}</h4><br>
+            {% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    <div>
+        <button>취소</button>
+        <a href="{% url 'travels:updatetravel' travel.id %}">
+            <button type='submit'>수정</button>
+        </a>
+        <a href="{% url 'travels:deletetravel' travel.id %}">
+            <button type='submit'>삭제</button>
+        </a>
+    </div>
+
+</div>
+{% endblock %} 

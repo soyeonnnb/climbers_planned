@@ -2,7 +2,7 @@
 {% block page_title %}여행지 수정{% endblock page_title %}
 {% block content %}
 <h1>여행지 수정</h1>
-<form action="{%url 'travels:updatetravel' travel.id %}" method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     <h4>여행 이름: </h4>

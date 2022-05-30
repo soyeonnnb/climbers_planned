@@ -1,8 +1,6 @@
 const placeFormset = document.querySelector("#placeformset");
-// const add_button = document.querySelector(".placeformset_add_button");
-const del_button = document.querySelector(".placeformset_del_button");
 const place_button = document.querySelector(".placeformset_place_button");
-const add_place_button = document.querySelector(".placeformset_add_place_button");
+const del_button = document.querySelector(".placeformset_del_button");
 const inputTotalForm = document.querySelector("#id_places-TOTAL_FORMS");
 let placeFormsetNumber = 1;
 
@@ -50,13 +48,15 @@ function makeFormsetP(number, name, address, lat, lng){
     p.appendChild(button);
     return p;
 }
+
 function cleanResult(){
     document.getElementById("click-result__name").innerText = "";
     document.getElementById("click-result__address").innerText = "";
     document.getElementById("click-result__lat").innerText = "";
     document.getElementById("click-result__lng").innerText ="";
 }
-// + 버튼 클릭시 폼 생성
+
+// 여행지 추가 버튼 클릭시 폼 생성
 function formsetAdd(){
     var formAddName = document.getElementById("click-result__name").innerText;
     var formAddAddress = document.getElementById("click-result__address").innerText;
@@ -79,16 +79,5 @@ function formsetDel(event){
     p.remove();
 }
 
-
-function formsetAddPlace(){
-    const p = makeFormsetP(placeFormsetNumber);
-    placeFormsetNumber ++ ;
-    inputTotalForm.value = placeFormsetNumber;
-    placeFormset.appendChild(p);
-}
-
-
-//add_button.addEventListener("click", formsetAdd);
+place_button.addEventListener("click", formsetAdd);
 del_button.addEventListener("click", formsetDel);
-place_button.addEventListener("click", formsetPlace);
-

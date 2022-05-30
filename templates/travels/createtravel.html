@@ -2,62 +2,72 @@
 {% load static %}
 {% block page_title %}여행지 추가{% endblock page_title %}
 {% block content %}
-<div class="title">
-    여행지 추가
-</div>
+<h1>여행지 추가</h1>
 
-<div class="table">
-    <div class="map_wrap">
-        <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+<div class="map_wrap">
+    <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
 
-        <div id="menu_wrap" class="bg_white">
-            <div class="option">
-                <div>
-                    <form onsubmit="searchPlaces(); return false;">
-                        키워드 : <input type="text" value="" id="keyword" size="15">
-                        <button type="submit">검색하기</button>
-                    </form>
-                </div>
+    <div id="menu_wrap" class="bg_white">
+        <div class="option">
+            <div>
+                <form onsubmit="searchPlaces(); return false;">
+                    키워드 : <input type="text" value="" id="keyword" size="15">
+                    <button type="submit">검색하기</button>
+                </form>
             </div>
-            <hr>
-            <ul id="placesList"></ul>
-            <div id="pagination"></div>
         </div>
+        <hr>
+        <ul id="placesList"></ul>
+        <div id="pagination"></div>
     </div>
-    <form action="" method="post">
-        {%csrf_token%}
-        ----여행
-        {{travelform.as_p}}
-
-        --------숙소
-        {{lodgingform.as_p}}
-        --------장소
-        {{placeformset.management_form}}
-        <div id="placeformset">
-            {% for form in placeformset %}
-            <p>
-                {{form}}
-                <button type="button" class="placeformset_del_button">❌</button>
-            </p>
-            {% endfor %}
-        </div>
-        <button type="button" class="placeformset_add_button">➕</button>
-        <div>
-            <button>취소</button>
-            <button type='submit'>경로 추천</button>
-        </div>
-
-    </form>
 </div>
 
+<cl id="click-result">
+    <span id="click-result__name"></span>
+    <span id="click-result__address" style="display:none;"></span>
+    <span id="click-result__lat" style="display:none;"></span>
+    <span id="click-result__lng" style="display:none;"></span>
+</cl>
+<button type="button" class="placeformset_add_button">여행지 추가</button>
 
-<div class="container">
 
-</div>
+<form action="" method="post">
+    <br>
+    <br>
+    <br>
+    <br>
+    {%csrf_token%}
+    ----여행
+    {{travelform.as_p}}
+    --------숙소
+    {{lodgingform.as_p}}
+    --------장소
+    {{placeformset.management_form}}
+    <div id="placeformset">
+        {% for form in placeformset %}
+        <p>
+            <button type="button" class="placeformset_del_button">❌</button>
+        </p>
+        {% endfor %}
+    </div>
+    <!-- <button type="button" class="placeformset_add_button">➕</button> -->
 
+    <div>
+        <button>취소</button>
+        <button type='submit'>경로 추천</button>
+    </div>
+</form>
+<br>
+<br>
+<br>
+<br>
+<br><br><br>
 {% endblock %}
 
 {% block javascript %}
+<script type="text/javascript"
+    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=899bda16db224b9417dff6448a51609c&libraries=services">
+    </script>
 <script type="text/javascript" src="{% static 'js/createtravel.js' %}?after "></script>
 <script type="text/javascript" src="{% static 'js/formset_button.js' %}?after "></script>
 {% endblock javascript %}

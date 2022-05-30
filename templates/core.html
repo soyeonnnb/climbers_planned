@@ -10,7 +10,8 @@
     <button class="new" onclick="location.href='{% url 'travels:createtravel' %}'"> + </button>
 
     {% for eachtravel in alltravel %}
-    <button class="plan" onclick="location.href='{% url 'travels:checktravel' eachtravel.id %}'">
+    <button class="plan" onclick="location.href='{% url 'travels:checktravel' eachtravel.id %}'"
+        style="background-color:{{eachtravel.color}};">
         {{eachtravel.name}}
         <br>
         {{eachtravel.start_date}}

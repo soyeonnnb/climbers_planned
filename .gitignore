@@ -165,3 +165,6 @@ NanumBarunGothicLight.ttf
 
 # aco 사진
 *.png
+
+# migrations 파일
+migrations/

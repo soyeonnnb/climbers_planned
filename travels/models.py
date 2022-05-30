@@ -16,6 +16,9 @@ class Travel(models.Model):
     updated_at = models.DateField(auto_now=True)  # 수정 날짜
     color = models.CharField(max_length=20)  # 고유색
 
+    def __str__(self):
+        return self.name
+
 
 class Place(models.Model):
 
@@ -32,6 +35,8 @@ class Place(models.Model):
     created_at = models.DateField(auto_now_add=True)  # 생성 날짜
     updated_at = models.DateField(auto_now=True)  # 수정 날짜
 
+    def __str__(self):
+        return self.name
 
 class Lodging(models.Model):
 
@@ -45,3 +50,7 @@ class Lodging(models.Model):
     longitude = models.FloatField()  # 경도(y)
     created_at = models.DateField(auto_now_add=True)  # 생성 날짜
     updated_at = models.DateField(auto_now=True)  # 수정 날짜
+
+    def __str__(self):
+        return self.name
+        

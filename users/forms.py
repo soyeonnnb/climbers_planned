@@ -21,6 +21,7 @@ class LoginForm(forms.Form):
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError("User Does Not Exist."))
 
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
@@ -40,7 +41,8 @@ class LoginForm(forms.Form):
             "name": "userPassword",
             "maxlength": "20",
         }
-
+    
+    
 
 class SignUpForm(forms.ModelForm):
     class Meta:

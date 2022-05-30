@@ -68,18 +68,21 @@ def checkpath(request, pk):
     for p in models.Place.objects.filter(travel=pk).order_by("order"):
         places.append(p)
     # places = sorted(places, key=models.Place.day)
+    count_date = (travel.end_date - travel.start_date).days + 1    
+    chk_day = [[] for _ in range(count_date)]
+    for i in places:
+        chk_day[i.day-1].append(i) 
+    for i in range(len(chk_day)):
+        chk_day[i].insert(0, i+1)
+    print(chk_day)
     return render(
-        request, "travels/checkpath.html", {"travel": travel, "places": places}
+        request, "travels/checkpath.html", {"travel": travel, "places": places, "chk_day":chk_day}
     )
 
 
 @login_required
 def savepath(request):  # 경로 저장
-    # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨주므로 db에 저장할 필요 없는 것 같은데.. 맞나요?
-    # 시퀀스 다이어그램 상 다시 저장해주어야 하긴 하는데.. 갱신 아닌지.. 근데 갱신할 필요가 없는 것 같아서요
-    # travel = models.Travel.objects.get(pk=pk)
-    # place = models.Place.objects.filter(travel=pk).order_by('order')
-    # #db 저장 안 해도 되나?
+    # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨줌.
     return redirect("core")
 
 
@@ -90,11 +93,18 @@ def checktravel(request, pk):
     places = []
     for p in models.Place.objects.filter(travel=pk):
         places.append(p)
+    count_date = (travel.end_date - travel.start_date).days + 1    
+    chk_day = [[] for _ in range(count_date)]
+    for i in places:
+        chk_day[i.day-1].append(i) 
+    for i in range(len(chk_day)):
+        chk_day[i].insert(0, i+1)
+    
     # places = sorted(places, key=models.Place.day)
     return render(
         request,
         "travels/checktravel.html",
-        {"travel": travel, "lodging": lodging, "places": places},
+        {"travel": travel, "lodging": lodging, "places": places, "chk_day": chk_day},
     )
 @login_required
 def addplace(request):
@@ -125,14 +135,15 @@ def updatetravel(request, pk):
             travel.end_date = travel_end_date
             lodging.name = lodging_name
 
-            for place in places:
-                place_name = placeformset.cleaned_data["place_name"]
+            for place in placeformset:
+                place_name = place.cleaned_data["place_name"]
                 place.name = place_name
 
             travel.save()
             lodging.save()
             places.save()
-        return redirect("travels:checktravel", kwargs={"pk": pk})
+        return redirect("travels:checktravel", kwargs={"pk": pk}) 
+        #return redirect("travels:checktravel", {"travel": travel, "lodging": lodging, "places": places},
 
     else:
         travelform = forms.TravelModelForm(instance=travel)
@@ -147,7 +158,6 @@ def updatetravel(request, pk):
             "lodgingform": lodgingform,
             "placeformset": placeformset,
         },
-        context_instance=RequestContext(request),
     )
 
 
@@ -171,3 +181,14 @@ def updatetravel(request, pk):
 #         return redirect('travels:checktravel', pk=travel.pk)
 #     return render(request, 'travels/updatetravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
 
+def deletetravel(request, pk):
+    travel = get_object_or_404(models.Travel, pk=pk)
+    lodging = models.Lodging.objects.get(travel=pk)
+    places = []
+    for p in models.Place.objects.filter(travel=pk):
+        places.append(p)
+    travel.delete()
+    lodging.delete()
+    for p in places:
+        p.delete()
+    return redirect("core")

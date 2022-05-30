@@ -3,10 +3,6 @@ from django.contrib.auth import authenticate
 from django.contrib import auth
 from . import forms
 from django.views.generic import FormView
-<<<<<<< HEAD
-=======
-
->>>>>>> map
 from django.urls import reverse_lazy
 
 from django.contrib.auth.decorators import login_required

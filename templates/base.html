@@ -8,6 +8,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block page_title %}{% endblock page_title %}</title>
     <link rel="stylesheet" href="{% static 'css/css.css' %}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+a:link {
+  color : white;
+}
+a:visited {
+  color : white;
+}
+a:hover {
+  color : white;
+}
+a:active {
+  color : yellow;
+}
+
+
+*{
+  font-family: 'Jua', sans-serif;
+}
+
+</style>
+
 </head>
 
 <body>
@@ -18,15 +43,14 @@
         
         <div class="nav-item-right">
             <div class="nav-tiem">
-                <a href="{% url 'core:core' %}">메인화면</a>
                 {% if user.is_authenticated %}
-                <h4>{{request.user}}님 안녕하세요!</h4>
+                <span style="color:white;">{{request.user}}님 안녕하세요!</span>
                 <a href="{% url 'users:logout' %}">로그아웃</a>
                 {% else %}
                 <a href="{% url 'users:signup' %}">회원가입</a>
                 <a href="{% url 'users:login' %}">로그인</a>
                 {% endif %}
-            </div>
+                </div>
         </div>
     </div>
     <div class="main">

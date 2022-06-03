@@ -4,11 +4,12 @@
 <div class="title">
     경로 확인
 </div>
-{% csrf_token %}
+<div class="main">
+    <div class="table">
 
 {{travel.name}}
 {{travel.start_date }}
-
+<div class="button-table">
     {% for place in chk_day %}
         <h3>{{place.0}}일차</h3><br>
         {% for p in places %}
@@ -18,9 +19,11 @@
         {% endfor %}
     {% endfor %}
 
-
-<button>취소</button>
-<a href="{% url 'travels:savepath' %}">
-    <button type='submit'>경로 저장</button>
-</a>
+  <button class="act" onclick="history.back()">취소</button>
+  <a href="{% url 'travels:savepath' %}">
+      <button type='submit' class="act">경로 저장</button>
+  </a>
+</div>
+</div>
+</div>
 {% endblock %}

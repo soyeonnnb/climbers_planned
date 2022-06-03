@@ -40,11 +40,12 @@ a:active {
         <div class="logo">
             <a href="{% url 'core:core' %}"><img src="https://i.imgur.com/dhqCfSc.png"></a>
         </div>
-        
+
         <div class="nav-item-right">
             <div class="nav-tiem">
                 {% if user.is_authenticated %}
                 <span style="color:white;">{{request.user}}님 안녕하세요!</span>
+
                 <a href="{% url 'users:logout' %}">로그아웃</a>
                 {% else %}
                 <a href="{% url 'users:signup' %}">회원가입</a>
@@ -65,4 +66,3 @@ a:active {
     {% block javascript %}
     {% endblock javascript %}
 </body>
-

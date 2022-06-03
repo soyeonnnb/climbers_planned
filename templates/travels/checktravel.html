@@ -20,25 +20,22 @@
         <input type="date" class="datebar" value={{travel.end_date}} disabled/>
     </div>
     
-          {% for place in places %}
-          <div class="check-table">
-            <span class="textline">{{place.day}}일차</span>
-            <br>
-            <input type="text" class="textbar" value={{place.name}} disabled/>
-            <br>
-                
-          </div>
-      
+    {% for place in chk_day %}
+        <h3>{{place.0}}일차</h3><br>
+        {% for p in places %}
+            {% if p.day == place.0 %}
+                <h4>{{p.name}}</h4><br>
+            {% endif %}
         {% endfor %}
- 
-
-
-  
+    {% endfor %}
 
     <div class="button-table">
     <button class="act" onclick="history.back()">취소</button>
     <a href="{% url 'travels:updatetravel' travel.id %}">
         <button type='submit' class="act">수정</button>
+    </a>
+    <a href="{% url 'travels:deletetravel' travel.id %}">
+        <button type='submit'>삭제</button>
     </a>
     </div>
 

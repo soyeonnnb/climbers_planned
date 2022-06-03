@@ -21,6 +21,7 @@ class LoginForm(forms.Form):
         except models.User.DoesNotExist:
             self.add_error("email", forms.ValidationError("User Does Not Exist."))
 
+
     def __init__(self, *args, **kwargs):
         super(LoginForm, self).__init__(*args, **kwargs)
 
@@ -40,8 +41,8 @@ class LoginForm(forms.Form):
             "name": "userPassword",
             "maxlength": "20",
         }
-
-
+    
+    
 
 class SignUpForm(forms.ModelForm):
     class Meta:
@@ -102,6 +103,14 @@ class SignUpForm(forms.ModelForm):
             "type": "password",
             "placeholder": "비밀번호",
             "name": "userPassword",
+            "maxlength": "20",
+        }
+        self.fields["password1"].widget.attrs = {
+            "class": "form-control",
+            "id": "numberInput",
+            "type": "password",
+            "placeholder": "비밀번호 확인",
+            "name": "userPassword1",
             "maxlength": "20",
         }
         self.fields["name"].widget.attrs = {

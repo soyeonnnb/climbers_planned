@@ -324,5 +324,5 @@ def aco_run(travel, count_date, shell=True):
             name = f"{travel.pk}"
             title = f'"{travel.name}"'
             # 그래프 확인하고 싶으면 주석 빼기
-        max_min.plot(name=name, color=i, shell=shell, title=title)
+        #max_min.plot(name=name, color=i, shell=shell, title=title)
         max_min.save_route()

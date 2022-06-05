@@ -19,10 +19,13 @@
         {% endfor %}
     {% endfor %}
 
-  <button class="act" onclick="history.back()">취소</button>
-  <a href="{% url 'travels:savepath' %}">
+
+    <a href="{% url 'travels:deletetravel' travel.id %}">
+        <button type='submit' class="act">경로 취소</button>
+    </a>
+    <a href="{% url 'travels:savepath' %}">
       <button type='submit' class="act">경로 저장</button>
-  </a>
+    </a>
 </div>
 </div>
 </div>

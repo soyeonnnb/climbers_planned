@@ -29,16 +29,17 @@
     <span id="click-result__lng" style="display:none;"></span>
 </cl>
 <button type="button" class="placeformset_place_button">여행지 추가</button>
+<button type="button" id="lodging_button">숙소 추가</button>
 
-    <div class="table">
-<form action="" method="post">
-    {%csrf_token%}
-  <br>
-    <br>
-    <br>
-    <br>
-    ----여행
-    <div class="check-table">
+<div class="table">
+    <form action="" method="post">
+        {%csrf_token%}
+        <br>
+        <br>
+        <br>
+        <br>
+        ----여행
+        <div class="check-table">
             <span class="textline">여행이름</span>
             <div class="textbar">
                 {{travelform.name}}
@@ -56,23 +57,24 @@
             <span class="textline">여행지 컬러</span>
             <input type="color" class="textbar" value={{travelform.color}}>
         </div>
-    --------숙소
-    {{lodgingform.as_p}}
-    --------장소
-    {{placeformset.management_form}}
-    <div id="placeformset">
-        {% for form in placeformset %}
-        <p>
-            <button type="button" class="placeformset_del_button">❌</button>
-        </p>
-        {% endfor %}
-    </div>
+        --------숙소
+        <div id="lodging_form">
+        </div>
+        --------장소
+        {{placeformset.management_form}}
+        <div id="placeformset">
+            {% for form in placeformset %}
+            <p>
+                <button type="button" class="placeformset_del_button">❌</button>
+            </p>
+            {% endfor %}
+        </div>
 
-    <div class="button-table">
+        <div class="button-table">
             <button class="act" onclick="history.back()">취소</button>
             <button type='submit' class="act">경로 추천</button>
-    </div>
-</form>
+        </div>
+    </form>
 </div>
 <br>
 <br>

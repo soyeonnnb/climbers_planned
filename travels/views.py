@@ -26,8 +26,6 @@ def create_travel(request):
             lodging = lodgingform.save(commit=False)
             lodging.travel = travel
             ### lodging fake data###
-            # lodging.latitude = random.uniform(0, 5)
-            # lodging.longitude = random.uniform(0, 5)
             lodging.save()
             ### lodging fake data###
             for form in placeformset:
@@ -68,15 +66,17 @@ def checkpath(request, pk):
     for p in models.Place.objects.filter(travel=pk).order_by("order"):
         places.append(p)
     # places = sorted(places, key=models.Place.day)
-    count_date = (travel.end_date - travel.start_date).days + 1    
+    count_date = (travel.end_date - travel.start_date).days + 1
     chk_day = [[] for _ in range(count_date)]
     for i in places:
-        chk_day[i.day-1].append(i) 
+        chk_day[i.day - 1].append(i)
     for i in range(len(chk_day)):
-        chk_day[i].insert(0, i+1)
+        chk_day[i].insert(0, i + 1)
     print(chk_day)
     return render(
-        request, "travels/checkpath.html", {"travel": travel, "places": places, "chk_day":chk_day}
+        request,
+        "travels/checkpath.html",
+        {"travel": travel, "places": places, "chk_day": chk_day},
     )
 
 
@@ -93,93 +93,20 @@ def checktravel(request, pk):
     places = []
     for p in models.Place.objects.filter(travel=pk):
         places.append(p)
-    count_date = (travel.end_date - travel.start_date).days + 1    
+    count_date = (travel.end_date - travel.start_date).days + 1
     chk_day = [[] for _ in range(count_date)]
     for i in places:
-        chk_day[i.day-1].append(i) 
+        chk_day[i.day - 1].append(i)
     for i in range(len(chk_day)):
-        chk_day[i].insert(0, i+1)
-    
+        chk_day[i].insert(0, i + 1)
+
     # places = sorted(places, key=models.Place.day)
     return render(
         request,
         "travels/checktravel.html",
         {"travel": travel, "lodging": lodging, "places": places, "chk_day": chk_day},
     )
-@login_required
-def addplace(request):
-    return render(request, "travels/addplace.html")
 
-
-@login_required
-def updatetravel(request, pk):
-    travel = get_object_or_404(models.Travel, pk=pk)
-    lodging = models.Lodging.objects.get(travel=pk)
-    places = []
-    for p in models.Place.objects.filter(travel=pk):
-        places.append(p)
-    if request.method == "POST":
-        travelform = forms.TravelModelForm(request.POST, prefix="travel")
-        lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
-        placeformset = forms.PlaceFormset(request.POST, prefix="places")
-        if not travel:
-            return redirect("core")
-        if travelform.is_valid() and lodgingform.is_valid() and placeformset.is_valid():
-            travel_name = travelform.cleaned_data["travel_name"]
-            travel_start_date = travelform.cleaned_data["travel_start_date"]
-            travel_end_date = travelform.cleaned_data["travel_end_date"]
-            lodging_name = lodgingform.cleaned_data["lodging_name"]
-
-            travel.name = travel_name
-            travel.start_date = travel_start_date
-            travel.end_date = travel_end_date
-            lodging.name = lodging_name
-
-            for place in placeformset:
-                place_name = place.cleaned_data["place_name"]
-                place.name = place_name
-
-            travel.save()
-            lodging.save()
-            places.save()
-        return redirect("travels:checktravel", kwargs={"pk": pk}) 
-        #return redirect("travels:checktravel", {"travel": travel, "lodging": lodging, "places": places},
-
-    else:
-        travelform = forms.TravelModelForm(instance=travel)
-        lodgingform = forms.LodgingModelForm(instance=lodging)
-        placeformset = forms.PlaceFormset(queryset=models.Place.objects.all())
-    print(placeformset)
-    return render(
-        request,
-        "travels/updatetravel.html",
-        {
-            "travelform": travelform,
-            "lodgingform": lodgingform,
-            "placeformset": placeformset,
-        },
-    )
-
-
-# @login_required
-# def updatetravel(request, pk):
-#     travel = get_object_or_404(models.Travel, pk=pk)
-#     lodging = models.Lodging.objects.get(travel=pk)
-#     places = []
-#     for p in models.Place.objects.filter(travel=pk):
-#         places.append(p)
-#     if request.method == "POST": #update
-#         travel.name = request.POST.get("name", False)
-#         lodging.name = request.POST.get("name", False)
-#         travel.start_date = request.POST.get("start_date", False)
-#         travel.end_date = request.POST.get("end_date", False)
-#         for place in places:
-#             place.name = request.POST.get("name", False)
-#         # travel.save()
-#         # lodging.save()
-#         # places.save()
-#         return redirect('travels:checktravel', pk=travel.pk)
-#     return render(request, 'travels/updatetravel.html', {'travel':travel, 'lodging':lodging, 'places':places})
 
 def deletetravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)

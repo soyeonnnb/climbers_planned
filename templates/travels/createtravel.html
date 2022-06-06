@@ -2,7 +2,7 @@
 {% load static %}
 {% block page_title %}여행지 추가{% endblock page_title %}
 {% block content %}
-<h1>여행지 추가</h1>
+<div class="title">여행지 추가</div>
 
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
@@ -28,37 +28,43 @@
     <span id="click-result__lat" style="display:none;"></span>
     <span id="click-result__lng" style="display:none;"></span>
 </cl>
-<button type="button" class="placeformset_place_button">여행지 추가</button>
+<button type="button" class="placeformset_place_button act">여행지 추가</button>
 
-    <div class="table">
+<div class="table">
 <form action="" method="post">
     {%csrf_token%}
-  <br>
-    <br>
-    <br>
-    <br>
-    ----여행
-    <div class="check-table">
+        <div class="add-check-table">
             <span class="textline">여행이름</span>
-            <div class="textbar">
-                {{travelform.name}}
-            </div>
+            <input type="text" class="textbar" value={{travelform.name}}>
         </div>
-        <div class="check-table">
+        <div class="add-check-table">
             <span class="textline">여행시작날짜</span>
             <input type="date" class="textbar" value={{travelform.start_date}}>
         </div>
-        <div class="check-table">
+        <div class="add-check-table">
             <span class="textline">여행종료날짜</span>
             <input type="date" class="textbar" value={{travelform.end_date}}>
         </div>
-        <div class="check-table">
+        <div class="add-check-table">
             <span class="textline">여행지 컬러</span>
             <input type="color" class="textbar" value={{travelform.color}}>
         </div>
     --------숙소
-    {{lodgingform.as_p}}
+    <div class="add-check-table">
+        <span class="textline">숙소이름</span>
+        <input type="text" class="textbar" value={{lodgingform.name}}>
+    </div>
+    <div class="add-check-table">
+        <span class="textline">숙소위도</span>
+        <input type="number" class="textbar" value={{lodgingform.latitude}}>
+    </div>
+    <div class="add-check-table">
+        <span class="textline">숙소경도</span>
+        <input type="number" class="textbar" value={{lodgingform.longitude}}>
+    </div>
     --------장소
+<div class="add-check-table">
+    <span class="textline">여행지 추가</span>
     {{placeformset.management_form}}
     <div id="placeformset">
         {% for form in placeformset %}
@@ -67,11 +73,12 @@
         </p>
         {% endfor %}
     </div>
-
+</div>
     <div class="button-table">
             <button class="act" onclick="history.back()">취소</button>
             <button type='submit' class="act">경로 추천</button>
     </div>
+
 </form>
 </div>
 <br>

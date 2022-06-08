@@ -6,7 +6,6 @@ app_name = "travels"
 urlpatterns = [
     path("<int:pk>/", checkpath, name="checkpath"),
     path("createtravel/", create_travel, name="createtravel"),
-    path("savepath/", savepath, name="savepath"),
     path("checktravel/<int:pk>/", checktravel, name="checktravel"),
     path("deletetravel/<int:pk>/", deletetravel, name="deletetravel"),
 ]

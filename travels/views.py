@@ -81,12 +81,6 @@ def checkpath(request, pk):
 
 
 @login_required
-def savepath(request):  # 경로 저장
-    # 경로 저장의 경우, 여행지 추가하는 과정에서 이미 db를 넘겨줌.
-    return redirect("core")
-
-
-@login_required
 def checktravel(request, pk):
     travel = get_object_or_404(models.Travel, pk=pk)
     lodging = models.Lodging.objects.get(travel=pk)

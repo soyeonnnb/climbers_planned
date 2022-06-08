@@ -11,6 +11,7 @@ function makeFormsetP(number, name, address, lat, lng){
     // label 생성
     const formSpan = document.createElement("span");
     formSpan.innerText = name;
+    formSpan.className="textbar input";
     // input - name 생성
     const input_name = document.createElement("input");
     input_name.type = "hidden";
@@ -86,6 +87,7 @@ function makeLodgingP(name, lat, lng){
     // label 생성
     const formSpan = document.createElement("span");
     formSpan.innerText = name;
+    formSpan.className="textbar input";
     // input - name 생성
     const input_name = document.createElement("input");
     input_name.type = "hidden";

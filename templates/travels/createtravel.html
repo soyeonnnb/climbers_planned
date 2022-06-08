@@ -32,11 +32,11 @@
 <button type="button" id="lodging_button">숙소 추가</button>
 
 <div class="table">
-<form action="" method="post">
-    {%csrf_token%}
+    <form action="" method="post">
+        {%csrf_token%}
         <div class="add-check-table">
             <span class="textline">여행이름</span>
-            <input type="text" class="textbar" value={{travelform.name}}>
+            <input type="text" class="textbar">
         </div>
         <div class="add-check-table">
             <span class="textline">여행시작날짜</span>
@@ -50,17 +50,16 @@
             <span class="textline">여행지 컬러</span>
             <input type="color" class="textbar" value={{travelform.color}}>
         </div>
-  
+
         --------숙소
         <div id="lodging_form">
         </div>
-  
 
-    --------장소
-<div class="add-check-table">
-    <span class="textline">여행지 추가</span>
-    
-</div>
+
+        --------장소
+        <div class="add-check-table">
+            <span class="textline">여행지 추가</span>
+        </div>
         {{placeformset.management_form}}
         <div id="placeformset">
             {% for form in placeformset %}
@@ -75,6 +74,7 @@
             <button class="act" onclick="history.back()">취소</button>
             <button type='submit' class="act">경로 추천</button>
         </div>
+
     </form>
 </div>
 <br>

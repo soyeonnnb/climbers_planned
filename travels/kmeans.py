@@ -12,6 +12,14 @@ from . import models as travels_models
 
 def kmeans_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
+
+
+    cnt = 0
+    for elem in all_places:
+        cnt += 1
+
+    if cnt >= count_date:
+        raise ValueError("여행지 수는 여행일자보다 많아야 합니다.")
     all_places_df = all_places.values("name", "latitude", "longitude")
     df_allplace = pd.DataFrame(all_places_df)
 

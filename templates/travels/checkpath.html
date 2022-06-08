@@ -16,6 +16,7 @@
             <input type="text" class="textbar" value="{{travel.start_date}}"shworu disabled/>
         </div>
 
+
         {% for place in chk_day %}
         <div class="add-check-table">
             <span class="textline">{{place.0}}일차</span>
@@ -27,12 +28,15 @@
         </div>
         {% endfor %}
        
-      
+
 <div class="button-table">
-  <button class="act" onclick="history.back()">취소</button>
-  <a href="{% url 'travels:savepath' %}">
+
+    <a href="{% url 'travels:deletetravel' travel.id %}">
+        <button type='submit' class="act">경로 취소</button>
+    </a>
+    <a href="{% url 'core:core' %}">
       <button type='submit' class="act">경로 저장</button>
-  </a>
+    </a>
 </div>
 </div>
 </div>

@@ -315,8 +315,12 @@ def aco_run(travel, count_date, shell=True):
             nodes=_nodes,
             labels=_labels,
             lodging=_lodging,
+            alpha=1.0,
+            beta=3.0,
+            rho=0.1,
         )
         max_min.run()
+
         if shell:
             name = f"{travel}-{i}"
             title = f"{i}일차"
@@ -324,5 +328,5 @@ def aco_run(travel, count_date, shell=True):
             name = f"{travel.pk}"
             title = f'"{travel.name}"'
             # 그래프 확인하고 싶으면 주석 빼기
-        max_min.plot(name=name, color=i, shell=shell, title=title)
+        # max_min.plot(name=name, color=i, shell=shell, title=title)
         max_min.save_route()

@@ -20,6 +20,7 @@ def kmeans_run(travel, count_date):
 
     if cnt >= count_date:
         raise ValueError("여행지 수는 여행일자보다 많아야 합니다.")
+        
     all_places_df = all_places.values("name", "latitude", "longitude")
     df_allplace = pd.DataFrame(all_places_df)
 

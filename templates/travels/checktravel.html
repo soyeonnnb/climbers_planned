@@ -15,9 +15,9 @@
     </div>
     <div class="check-table">
         <span class="textline">여행기간</span>
-        <input type="date" class="datebar" value={{travel.start_date}} disabled/>
+        <input type="text" class="datebar" value="{{travel.start_date}}" disabled/>
         <span class="textline" style="margin-left: auto;">~</span>
-        <input type="date" class="datebar" value={{travel.end_date}} disabled/>
+        <input type="text" class="datebar" value="{{travel.end_date}}" disabled/>
     </div>
     
     {% for place in chk_day %}

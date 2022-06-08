@@ -7,23 +7,34 @@
 <div class="main">
     <div class="table">
 
-{{travel.name}}
-{{travel.start_date }}
-<div class="button-table">
-    {% for place in chk_day %}
-        <h3>{{place.0}}일차</h3><br>
-        {% for p in places %}
-            {% if p.day == place.0 %}
-                <h4>{{p.name}}</h4><br>
-            {% endif %}
-        {% endfor %}
-    {% endfor %}
+        <div class="add-check-table">
+            <span class="textline">여행이름</span>
+            <input type="text" class="textbar" value="{{travel.name}}" disabled/>
+        </div>
+        <div class="add-check-table">
+            <span class="textline">여행 출발일</span>
+            <input type="text" class="textbar" value="{{travel.start_date}}"shworu disabled/>
+        </div>
 
+
+        {% for place in chk_day %}
+        <div class="add-check-table">
+            <span class="textline">{{place.0}}일차</span>
+            {% for p in places %}
+                {% if p.day == place.0 %}
+                <input type="text" class="textbar" value="{{p.name}}" disabled/>   
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+       
+
+<div class="button-table">
 
     <a href="{% url 'travels:deletetravel' travel.id %}">
         <button type='submit' class="act">경로 취소</button>
     </a>
-    <a href="{% url 'travels:savepath' %}">
+    <a href="{% url 'core:core' %}">
       <button type='submit' class="act">경로 저장</button>
     </a>
 </div>

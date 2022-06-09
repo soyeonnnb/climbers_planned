@@ -20,13 +20,20 @@ class TravelModelForm(forms.ModelForm):
         }
 
         widgets = {
+            "name": forms.TextInput(attrs={"class": "form-control textbar"}),
             "start_date": forms.DateInput(
-                attrs={"class": "form-control", "rows": 4, "type": "date"}
+                attrs={"class": "form-control textbar", "rows": 4, "type": "date"}
             ),
             "end_date": forms.DateInput(
-                attrs={"class": "form-control", "rows": 4, "type": "date"}
+                attrs={"class": "form-control textbar", "rows": 4, "type": "date"}
             ),
-            "color": forms.TextInput(attrs={"type": "color"}),
+            "color": forms.TextInput(
+                attrs={
+                    "class": "form-control textbar",
+                    "type": "color",
+                    "rows": 4,
+                }
+            ),
         }
 
 

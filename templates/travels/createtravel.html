@@ -32,23 +32,23 @@
 <button type="button" id="lodging_button">숙소 추가</button>
 
 <div class="table">
-    <form action="" method="post">
+    <form action="" method="POST">
         {%csrf_token%}
         <div class="add-check-table">
             <span class="textline">여행이름</span>
-            <input type="text" class="textbar">
+            {{travelform.name}}
         </div>
         <div class="add-check-table">
             <span class="textline">여행시작날짜</span>
-            <input type="date" class="textbar" value={{travelform.start_date}}>
+            {{travelform.start_date}}
         </div>
         <div class="add-check-table">
             <span class="textline">여행종료날짜</span>
-            <input type="date" class="textbar" value={{travelform.end_date}}>
+            {{travelform.end_date}}
         </div>
         <div class="add-check-table">
             <span class="textline">여행지 컬러</span>
-            <input type="color" class="textbar" value={{travelform.color}}>
+            {{travelform.color}}
         </div>
 
         --------숙소

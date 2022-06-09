@@ -14,7 +14,6 @@ from . import models as travels_models
 def kmeans_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
     cnt = len(all_places)
-    print(cnt)
     if cnt < count_date:
         raise DayException()
 

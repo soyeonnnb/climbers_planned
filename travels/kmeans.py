@@ -13,9 +13,6 @@ from . import models as travels_models
 
 def kmeans_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
-    cnt = len(all_places)
-    if cnt < count_date:
-        raise DayException()
 
     all_places_df = all_places.values("name", "latitude", "longitude")
     df_allplace = pd.DataFrame(all_places_df)
@@ -40,6 +37,3 @@ def kmeans_run(travel, count_date):
     # print(df_allplace)
     # print(travel_schedule_json)
 
-
-class DayException(Exception):
-    pass

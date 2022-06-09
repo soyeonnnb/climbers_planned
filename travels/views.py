@@ -1,9 +1,11 @@
 import random
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from . import forms
 from . import models
 from . import aco
 from . import kmeans
+from .kmeans import DayException
 from django.template import RequestContext
 
 from django.contrib.auth.decorators import login_required
@@ -39,7 +41,19 @@ def create_travel(request):
                 place.day = random.randint(1, count_date)
                 ### place fake data ###
                 place.save()
-            kmeans.kmeans_run(travel, count_date)
+            try:
+                kmeans.kmeans_run(travel, count_date)
+            except DayException:
+                messages.error(request, "여행지 수는 여행일자보다 많아야 합니다.")
+                return render(
+                    request,
+                    "travels/createtravel.html",
+                    {
+                        "travelform": travelform,
+                        "lodgingform": lodgingform,
+                        "placeformset": placeformset,
+                    },
+                )
             aco.aco_run(travel, count_date, shell=False)
             return redirect("travels:checkpath", pk=travel.pk)
     else:

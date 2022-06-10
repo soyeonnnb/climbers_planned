@@ -11,6 +11,7 @@ function makeFormsetP(number, name, address, lat, lng){
     // label 생성
     const formSpan = document.createElement("span");
     formSpan.innerText = name;
+    formSpan.className="textbar input";
     // input - name 생성
     const input_name = document.createElement("input");
     input_name.type = "hidden";
@@ -41,6 +42,7 @@ function makeFormsetP(number, name, address, lat, lng){
     // 삭제 button 생성
     const button = document.createElement("button");
     button.innerText = "❌";
+    button.className="delete";
     button.addEventListener("click", formsetDel);
     p.appendChild(formSpan);
     p.appendChild(input_name);
@@ -86,6 +88,7 @@ function makeLodgingP(name, lat, lng){
     // label 생성
     const formSpan = document.createElement("span");
     formSpan.innerText = name;
+    formSpan.className="textbar input";
     // input - name 생성
     const input_name = document.createElement("input");
     input_name.type = "hidden";

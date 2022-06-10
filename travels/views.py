@@ -28,7 +28,7 @@ def create_travel(request):
                 start_date = travelform.cleaned_data.get("start_date")
                 end_date = travelform.cleaned_data.get("end_date")
                 count_date = (end_date - start_date).days + 1
-                if len(placeformset) < count_date:
+                if len(placeformset) <= count_date:
                     raise DayException()
                 travel.save()
                 lodging = lodgingform.save(commit=False)
@@ -68,6 +68,11 @@ def create_travel(request):
         )
     except DayException:
         messages.error(request, "여행지 수는 여행일자보다 많아야 합니다.")
+        travelform = forms.TravelModelForm(request.GET or None, prefix="travel")
+        lodgingform = forms.LodgingModelForm(request.GET or None, prefix="lodging")
+        placeformset = forms.PlaceFormset(
+            queryset=models.Place.objects.none(), prefix="places"
+        )
         return render(
             request,
             "travels/createtravel.html",

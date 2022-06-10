@@ -7,38 +7,38 @@
 <div class="table">
     <div class="check-table">
         <span class="textline">여행이름</span>
-        <input type="text" class="textbar" value="{{travel.name}}" disabled/>
+        <input type="text" class="textbar" value="{{travel.name}}" disabled />
     </div>
     <div class="check-table">
         <span class="textline">숙소</span>
-        <input type="text" class="textbar" value="{{lodging.name}}" disabled/>
+        <input type="text" class="textbar" value="{{lodging.name}}" disabled />
     </div>
     <div class="check-table">
         <span class="textline">여행기간</span>
-        <input type="text" class="datebar" value="{{travel.start_date}}" disabled/>
+        <input type="text" class="datebar" value="{{travel.start_date}}" disabled />
         <span class="textline" style="margin-left: auto;">~</span>
-        <input type="text" class="datebar" value="{{travel.end_date}}" disabled/>
+        <input type="text" class="datebar" value="{{travel.end_date}}" disabled />
     </div>
     {% for place in chk_day %}
     <div class="check-table">
         <span class="textline">{{place.0}}일차</span>
         {% for p in places %}
-            {% if p.day == place.0 %}
-            <input type="text" class="textbar" value="{{p.name}}" disabled/>   
-            {% endif %}
+        {% if p.day == place.0 %}
+        <input type="text" class="textbar" value="{{p.name}}" disabled />
+        {% endif %}
         {% endfor %}
     </div>
     {% endfor %}
-    
-   
+
+
 
     <div class="button-table">
-    <button class="act" onclick="history.back()">취소</button>
-  
-    <a href="{% url 'travels:deletetravel' travel.id %}">
-        <button type='submit' class="act">삭제</button>
-    </a>
+        <button class="act" onclick="history.back()">홈으로</button>
+
+        <a href="{% url 'travels:deletetravel' travel.id %}">
+            <button type='submit' class="act">삭제</button>
+        </a>
     </div>
 
- </div>
+</div>
 {% endblock %}

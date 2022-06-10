@@ -7,12 +7,13 @@ from sklearn.preprocessing import StandardScaler
 from matplotlib import cm
 import json
 
+
 from . import models as travels_models
 
 
 def kmeans_run(travel, count_date):
     all_places = travels_models.Place.objects.filter(travel=travel)
-        
+
     all_places_df = all_places.values("name", "latitude", "longitude")
     df_allplace = pd.DataFrame(all_places_df)
 
@@ -35,7 +36,6 @@ def kmeans_run(travel, count_date):
 
     print(df_allplace)
     # print(travel_schedule_json)
-
 
 def silhouetteViz(travel, count_date): 
 
@@ -105,3 +105,4 @@ def clusterScatter(travel, count_date):
     plt.grid()
     plt.tight_layout()
     plt.show()
+

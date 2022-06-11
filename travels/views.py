@@ -1,4 +1,5 @@
 import random
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, render, redirect
 from . import forms
 from . import models
@@ -11,52 +12,80 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def create_travel(request):
-    user = request.user
-    if request.method == "POST":
-        travelform = forms.TravelModelForm(request.POST, prefix="travel")
-        lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
-        placeformset = forms.PlaceFormset(request.POST, prefix="places")
-        if travelform.is_valid() and lodgingform.is_valid() and placeformset.is_valid():
-            travel = travelform.save(commit=False)
-            travel.user = user
-            travel.save()
-            start_date = travelform.cleaned_data.get("start_date")
-            end_date = travelform.cleaned_data.get("end_date")
-            count_date = (end_date - start_date).days + 1
-            lodging = lodgingform.save(commit=False)
-            lodging.travel = travel
-            ### lodging fake data###
-            lodging.save()
-            ### lodging fake data###
-            for form in placeformset:
-                place = form.save(commit=False)
-                place_name = form.cleaned_data.get("name")
-                if place_name == None:
-                    continue
-                place.travel = travel
-                place.order = 0  # order이 null이 되면 안되서 0으로 채워줌
-                ### place fake data ###
-                place.day = random.randint(1, count_date)
-                ### place fake data ###
-                place.save()
-            kmeans.kmeans_run(travel, count_date)
-            aco.aco_run(travel, count_date, shell=False)
-            return redirect("travels:checkpath", pk=travel.pk)
-    else:
+    try:
+        user = request.user
+        if request.method == "POST":
+            travelform = forms.TravelModelForm(request.POST, prefix="travel")
+            lodgingform = forms.LodgingModelForm(request.POST, prefix="lodging")
+            placeformset = forms.PlaceFormset(request.POST, prefix="places")
+            if (
+                travelform.is_valid()
+                and lodgingform.is_valid()
+                and placeformset.is_valid()
+            ):
+                travel = travelform.save(commit=False)
+                travel.user = user
+                start_date = travelform.cleaned_data.get("start_date")
+                end_date = travelform.cleaned_data.get("end_date")
+                count_date = (end_date - start_date).days + 1
+                if len(placeformset) <= count_date:
+                    raise DayException()
+                travel.save()
+                lodging = lodgingform.save(commit=False)
+                lodging.travel = travel
+                ### lodging fake data###
+                lodging.save()
+                ### lodging fake data###
+                for form in placeformset:
+                    place = form.save(commit=False)
+                    place_name = form.cleaned_data.get("name")
+                    if place_name == None:
+                        continue
+                    place.travel = travel
+                    place.order = 0  # order이 null이 되면 안되서 0으로 채워줌
+                    ### place fake data ###
+                    place.day = random.randint(1, count_date)
+                    ### place fake data ###
+                    place.save()
+                kmeans.kmeans_run(travel, count_date)
+
+                aco.aco_run(travel, count_date, shell=False)
+                return redirect("travels:checkpath", pk=travel.pk)
+        else:
+            travelform = forms.TravelModelForm(request.GET or None, prefix="travel")
+            lodgingform = forms.LodgingModelForm(request.GET or None, prefix="lodging")
+            placeformset = forms.PlaceFormset(
+                queryset=models.Place.objects.none(), prefix="places"
+            )
+        return render(
+            request,
+            "travels/createtravel.html",
+            {
+                "travelform": travelform,
+                "lodgingform": lodgingform,
+                "placeformset": placeformset,
+            },
+        )
+    except DayException:
+        messages.error(request, "여행지 수는 여행일자보다 많아야 합니다.")
         travelform = forms.TravelModelForm(request.GET or None, prefix="travel")
         lodgingform = forms.LodgingModelForm(request.GET or None, prefix="lodging")
         placeformset = forms.PlaceFormset(
             queryset=models.Place.objects.none(), prefix="places"
         )
-    return render(
-        request,
-        "travels/createtravel.html",
-        {
-            "travelform": travelform,
-            "lodgingform": lodgingform,
-            "placeformset": placeformset,
-        },
-    )
+        return render(
+            request,
+            "travels/createtravel.html",
+            {
+                "travelform": travelform,
+                "lodgingform": lodgingform,
+                "placeformset": placeformset,
+            },
+        )
+
+
+class DayException(Exception):
+    pass
 
 
 @login_required

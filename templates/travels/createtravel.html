@@ -35,9 +35,11 @@
     <span id="click-result__lat" style="display:none;"></span>
     <span id="click-result__lng" style="display:none;"></span>
 </cl>
-<button type="button" class="placeformset_place_button">여행지 추가</button>
-<button type="button" id="lodging_button">숙소 추가</button>
 
+<button type="button" class="act placeformset_place_button">여행지 추가</button>
+<button type="button" class="act" id="lodging_button">숙소 추가</button>
+<br>
+지도에서 여행지/숙소를 검색 후 추가 버튼을 눌러주세요
 <div class="table">
     <form action="" method="POST">
         {%csrf_token%}
@@ -58,25 +60,21 @@
             {{travelform.color}}
         </div>
 
-        --------숙소
-        <div id="lodging_form">
-        </div>
-
-
-        --------장소
         <div class="add-check-table">
-            <span class="textline">여행지 추가</span>
-        </div>
-        {{placeformset.management_form}}
-        <div id="placeformset">
-            {% for form in placeformset %}
-            <p>
-                <button type="button" class="placeformset_del_button">❌</button>
-            </p>
-            {% endfor %}
+            <span class="textline">숙소</span>
+            <div class="textbar" id="lodging_form">
+            </div>    
         </div>
 
-
+        <div class="add-check-table-two">
+            <span class="textline">여행지</span>
+            <div class="extra" id="placeformset">
+                {{placeformset.management_form}}
+                {% for form in placeformset %}
+                    <button type="button" class="placeformset_del_button">❌</button>
+                {% endfor %}
+            </div>
+        </div>
         <div class="button-table">
             <button class="act" onclick="history.back()">취소</button>
             <button type='submit' class="act">경로 추천</button>
@@ -84,11 +82,7 @@
 
     </form>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br><br><br>
+
 {% endblock %}
 
 {% block javascript %}

@@ -42,6 +42,7 @@ function makeFormsetP(number, name, address, lat, lng){
     // 삭제 button 생성
     const button = document.createElement("button");
     button.innerText = "❌";
+    button.className="delete";
     button.addEventListener("click", formsetDel);
     p.appendChild(formSpan);
     p.appendChild(input_name);

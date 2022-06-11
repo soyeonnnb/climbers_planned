@@ -15,40 +15,11 @@ var geocoder = new kakao.maps.services.Geocoder();
 var marker = new kakao.maps.Marker(), // 클릭한 위치를 표시할 마커입니다
 infowindow = new kakao.maps.InfoWindow({zindex:1}); // 클릭한 위치에 대한 주소를 표시할 인포윈도우입니다
 
-// var places = []; // 여행지 지번 주소 배열(도로명 주소가 없는 곳도 있음)
-// var coordinates = []; // 여행지 좌표 배열
-
 // 마커를 담을 배열입니다
 var markers = [];
 
 // 장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places();  
-
-// // 주소로 좌표를 검색합니다
-// geocoder.addressSearch('서울특별시 동대문구 이문로 107', function(result, status) {
-    
-// // 정상적으로 검색이 완료됐으면 
-//  if (status === kakao.maps.services.Status.OK) {
-    
-//     //result 배열 -> 검색 결과의 배열
-//     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
-
-//     // // 결과값으로 받은 위치를 마커로 표시합니다
-//     // var marker = new kakao.maps.Marker({
-//     //     map: map,
-//     //     position: coords
-//     // });
-
-//     // 인포윈도우로 장소에 대한 설명을 표시합니다
-//     // var infowindow = new kakao.maps.InfoWindow({
-//     //     content: '<div style="width:150px;text-align:center;padding:6px 0;">한국외대</div>'
-//     // });
-//     // infowindow.open(map, marker);
-
-//     // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-//     map.setCenter(coords);
-// } 
-// });   
 
 // 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
 kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
@@ -68,29 +39,9 @@ searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {
         // 인포윈도우에 클릭한 위치에 대한 법정동 상세 주소정보를 표시합니다
         infowindow.setContent(content);
         infowindow.open(map, marker);
-
-        // // 여행지 배열 끝에 클릭한 곳의 지번 주소 추가
-        // places.push(result[0].address.address_name);
-        // coordinates.push(mouseEvent.latLng);
-        
-        // var placesList = ""
-
-        // for ( i = 0; i < places.length; i++ ) {
-        //     placesList += places[i];
-        //     placesList += '(' + coordinates[i] + ')';
-        //     placesList += '\n'
-        // }
-        
-        // alert('현재 여행 경로는\n' + placesList + '입니다')
     }
 });
 });
-
-
-
-//검색 관련 함수
-// 키워드로 장소를 검색합니다
-//searchPlaces();
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
@@ -136,13 +87,6 @@ function displayPlaces(places) {
     var listEl = document.getElementById('placesList');
     var menuEl = document.getElementById('menu_wrap');
     var fragment = document.createDocumentFragment();
-    // var place = function(x, y, address_name){
-    //     this.x = x;
-    //     this.y = y;
-    //     this.address_name = address_name;
-    // }
-    // var coorArr = new Array();
-    //var bounds = new kakao.maps.LatLngBounds();
     
     // 검색 결과 목록에 추가된 항목들을 제거합니다
     removeAllChildNods(listEl);
@@ -151,23 +95,14 @@ function displayPlaces(places) {
     removeMarker();
 
     map.setCenter(new kakao.maps.LatLng(places[0].y, places[0].x));
-
-    // for ( var i=0; i<places.length; i++ )
-    // {
-    //     coorArr[i] = new place(places[i].x, places[i].y, places[i].address_name);
-    // }
     
     for ( var i=0; i<places.length; i++ ) {
         // 마커를 생성하고 지도에 표시합니다
         var placePosition = new kakao.maps.LatLng(places[i].y, places[i].x),
             marker = addMarker(placePosition, i), 
             itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
-        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-        // LatLngBounds 객체에 좌표를 추가합니다
-        //bounds.extend(placePosition);
 
         // 마커, itemEl 상호작용
-        // 이 부분에서 .py로 지번 주소 보내기
         (function(marker, address, title, x, y) {
             kakao.maps.event.addListener(marker, 'mouseover', function() {
                 displayInfowindow(marker, title);
@@ -201,9 +136,6 @@ function displayPlaces(places) {
     // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
     listEl.appendChild(fragment);
     menuEl.scrollTop = 0;
-
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-    //map.setBounds(bounds);
 }
 
 // 검색결과 항목을 Element로 반환하는 함수입니다
@@ -314,17 +246,6 @@ function removeAllChildNods(el) {
 
 
 // //지도 클릭 관련 함수(여행지)
-// function finishInputplaces() {
-//     var placesList = ""
-
-//     for ( i = 0; i < places.length; i++ ) {
-//         placesList += places[i];
-//         placesList += '\n'
-//     }
-
-//     alert('선택한 여행 경로는\n' + placesList + '입니다')
-// }
-
 function searchAddrFromCoords(coords, callback) {
 // 좌표로 행정동 주소 정보를 요청합니다
 geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);         

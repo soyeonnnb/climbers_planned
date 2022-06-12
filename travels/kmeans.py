@@ -20,7 +20,7 @@ def kmeans_run(travel, count_date):
     X_features = df_allplace[["latitude", "longitude"]].values
     X_features_scaled = StandardScaler().fit_transform(X_features)
 
-    kmeans = KMeans(n_clusters=count_date, random_state=0)
+    kmeans = KMeans(init = "k-means++", n_clusters=count_date, random_state=0)
     Y_labels = kmeans.fit_predict(X_features_scaled)
     Y_labels += 1
     df_allplace["Travel_Schedule"] = Y_labels
@@ -46,7 +46,7 @@ def silhouetteViz(travel, count_date):
     X_features = df_allplace[["latitude", "longitude"]].values
     X_features_scaled = StandardScaler().fit_transform(X_features)
 
-    kmeans = KMeans(n_clusters=count_date, random_state=0)
+    kmeans = KMeans(init = "k-means++", n_clusters=count_date, random_state=0)
     Y_labels = kmeans.fit_predict(X_features_scaled)
     silhouette_values = silhouette_samples(X_features, Y_labels, metric='euclidean')
 
@@ -85,7 +85,7 @@ def clusterScatter(travel, count_date):
     X_features = df_allplace[["latitude", "longitude"]].values
     X_features_scaled = StandardScaler().fit_transform(X_features)
 
-    kmeans = KMeans(n_clusters=count_date, random_state=0)
+    kmeans = KMeans(init = "k-means++", n_clusters=count_date, random_state=0)
     Y_labels = kmeans.fit_predict(X_features_scaled)
 
     for i in range(count_date):

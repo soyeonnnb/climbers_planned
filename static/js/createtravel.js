@@ -1,5 +1,3 @@
-var place_name = ""
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 mapOption = {
     center: new kakao.maps.LatLng(37.5973165519067, 127.058726610686),
@@ -256,6 +254,7 @@ function searchDetailAddrFromCoords(coords, callback) {
 geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
 
+//데이터 새로고침
 function refreshDetails(title, address, y, x){
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[0].innerHTML = title;
     document.getElementsByTagName('cl')[0].getElementsByTagName('span')[1].innerHTML = address;
